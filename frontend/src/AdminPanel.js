@@ -175,9 +175,7 @@ const AdminPanel = () => {
     setShowDeleteConfirm(false);
     
     try {
-      console.log('API çağırışı:', `${API}/products/${productToDelete}`);
-      const response = await axios.delete(`${API}/products/${productToDelete}`);
-      console.log('Silmə cavabı:', response.data);
+      await mockAPI.deleteProduct(productToDelete);
       
       // Uğurlu mesaj göstər
       alert('✅ Məhsul uğurla silindi!');
@@ -193,10 +191,7 @@ const AdminPanel = () => {
       
     } catch (error) {
       console.error('❌ Silmə xətası:', error);
-      console.error('Xəta detalları:', error.response?.data);
-      
-      const errorMessage = error.response?.data?.detail || error.message || 'Silmə zamanı xəta baş verdi!';
-      alert('❌ Xəta: ' + errorMessage);
+      alert('❌ Xəta: Silmə zamanı xəta baş verdi!');
     } finally {
       setLoading(false);
       setProductToDelete(null);
