@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
-const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
+import { mockAPI, initializeStorage } from "./mockAPI";
 
 const AdminPanel = () => {
-  // Backend yoxdursa warning göstər
-  const [showBackendWarning] = useState(!BACKEND_URL);
-  
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [orders, setOrders] = useState([]);
