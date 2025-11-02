@@ -13,6 +13,7 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
+  const showBackendWarning = false; // Static site - no backend warning needed
 
   // Form state
   const [formData, setFormData] = useState({
