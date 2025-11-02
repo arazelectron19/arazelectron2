@@ -206,19 +206,20 @@ const AdminPanel = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await axios.put(`${API}/orders/${orderId}/status?status=${newStatus}`);
-      alert('Status güncəlləndi!');
+      await mockAPI.updateOrderStatus(orderId, newStatus);
+      alert('✅ Status güncəlləndi!');
       loadData();
     } catch (error) {
       console.error('Status güncəlləmə xətası:', error);
+      alert('❌ Status güncəlləmə xətası!');
     }
   };
 
   const handleContactUpdate = async (contactData) => {
     try {
-      const response = await axios.put(`${API}/contact-info`, contactData);
-      setContactInfo(response.data);
-      alert('Əlaqə məlumatları güncəlləndi!');
+      const updated = await mockAPI.updateContactInfo(contactData);
+      setContactInfo(updated);
+      alert('✅ Əlaqə məlumatları güncəlləndi!');
       
       // Ana səhifəyə məlumat ver ki, əlaqə məlumatlarını yeniləsin
       localStorage.setItem('contact-updated', Date.now().toString());
@@ -226,7 +227,7 @@ const AdminPanel = () => {
       
     } catch (error) {
       console.error('Əlaqə güncəlləmə xətası:', error);
-      alert('Güncəlləmə zamanı xəta baş verdi!');
+      alert('❌ Güncəlləmə zamanı xəta baş verdi!');
     }
   };
 
