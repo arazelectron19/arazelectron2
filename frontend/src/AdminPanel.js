@@ -141,23 +141,16 @@ const AdminPanel = () => {
   const handleImageUpload = async (index, file) => {
     if (!file) return;
     
-    const formDataUpload = new FormData();
-    formDataUpload.append('file', file);
-    
     try {
-      const response = await axios.post(`${API}/upload-image`, formDataUpload, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const result = await mockAPI.uploadImage(file);
       
-      if (response.data.full_url) {
-        updateImageUrl(index, response.data.full_url);
-        alert('Şəkil uğurla yükləndi!');
+      if (result.url) {
+        updateImageUrl(index, result.url);
+        alert('✅ Şəkil uğurla yükləndi! (data URL olaraq)');
       }
     } catch (error) {
       console.error('Şəkil yükləmə xətası:', error);
-      alert('Şəkil yükləmə zamanı xəta baş verdi!');
+      alert('❌ Şəkil yükləmə zamanı xəta baş verdi!');
     }
   };
 
