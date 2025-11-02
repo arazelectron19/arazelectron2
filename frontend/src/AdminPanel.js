@@ -237,12 +237,12 @@ const AdminPanel = () => {
     }
 
     try {
-      await axios.post(`${API}/categories`, { name: categoryName.trim() });
-      alert('Kateqoriya əlavə edildi!');
+      await mockAPI.createCategory(categoryName.trim());
+      alert('✅ Kateqoriya əlavə edildi!');
       loadData(); // Kateqoriyaları yenilə
     } catch (error) {
       console.error('Kateqoriya əlavə etmə xətası:', error);
-      alert(error.response?.data?.detail || 'Kateqoriya əlavə etmə zamanı xəta baş verdi!');
+      alert('❌ Kateqoriya əlavə etmə zamanı xəta baş verdi!');
     }
   };
 
@@ -250,12 +250,12 @@ const AdminPanel = () => {
     if (!window.confirm(`"${categoryName}" kateqoriyasını silmək istədiyinizə əminsiniz?`)) return;
 
     try {
-      await axios.delete(`${API}/categories/${categoryId}`);
-      alert('Kateqoriya silindi!');
+      await mockAPI.deleteCategory(categoryName);
+      alert('✅ Kateqoriya silindi!');
       loadData(); // Kateqoriyaları yenilə
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
-      alert(error.response?.data?.detail || 'Kateqoriya silmə zamanı xəta baş verdi!');
+      alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
     }
   };
 
