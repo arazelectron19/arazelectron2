@@ -1,30 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
-const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
-
-// Retry helper with exponential backoff
-const fetchWithRetry = async (url, retries = 3, delay = 1000) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      const response = await axios.get(url, { timeout: 10000 });
-      return response;
-    } catch (error) {
-      const isLastRetry = i === retries - 1;
-      
-      if (isLastRetry) {
-        throw error;
-      }
-      
-      // Exponential backoff: 1s, 2s, 4s
-      const waitTime = delay * Math.pow(2, i);
-      console.log(`Retry ${i + 1}/${retries} after ${waitTime}ms...`);
-      await new Promise(resolve => setTimeout(resolve, waitTime));
-    }
-  }
-};
+import { mockAPI, initializeStorage } from "./mockAPI";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -33,7 +9,6 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
-  const [serverWaking, setServerWaking] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -44,34 +19,25 @@ const HomePage = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      setServerWaking(false);
       
-      // İlk API çağırışını retry ilə et (server oyaq olmaya bilər)
-      try {
-        const productsResponse = await fetchWithRetry(`${API}/products`, 3, 1000);
-        setProducts(productsResponse.data || []);
-      } catch (firstError) {
-        // Əgər ilk retry uğursuz olsa, "server waking up" mesajı göstər
-        setServerWaking(true);
-        console.log('Server waking up, waiting 5 seconds...');
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        
-        // Bir daha cəhd et
-        const productsResponse = await fetchWithRetry(`${API}/products`, 2, 2000);
-        setProducts(productsResponse.data || []);
-        setServerWaking(false);
-      }
+      // Initialize storage with mock data
+      initializeStorage();
       
-      // Kateqoriyaları yüklə (artıq server oyaqdır)
-      const categoriesResponse = await axios.get(`${API}/categories`);
-      setCategories(categoriesResponse.data.categories || []);
+      // Load from localStorage via mockAPI
+      const productsData = await mockAPI.getProducts();
+      setProducts(productsData || []);
       
-      // Əlaqə məlumatlarını yüklə
-      const contactResponse = await axios.get(`${API}/contact-info`);
-      setContactInfo(contactResponse.data);
+      const categoriesData = await mockAPI.getCategories();
+      setCategories(categoriesData.categories || []);
+      
+      const contactData = await mockAPI.getContactInfo();
+      setContactInfo(contactData);
       
     } catch (error) {
       console.error('Məlumat yükləmə xətası:', error);
+      // Initialize with empty data if error
+      setProducts([]);
+      setCategories([]);
     } finally {
       setLoading(false);
     }
