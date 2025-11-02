@@ -81,17 +81,18 @@ const AdminPanel = () => {
       const productData = {
         ...formData,
         price: parseFloat(formData.price),
-        stock: 100  // Default stok
+        stock: parseInt(formData.stock) || 100,
+        images: formData.image_urls.filter(url => url.trim())
       };
 
       if (editingProduct) {
         // Redaktə
-        await axios.put(`${API}/products/${editingProduct.id}`, productData);
-        alert('Məhsul güncəlləndi!');
+        await mockAPI.updateProduct(editingProduct.id, productData);
+        alert('✅ Məhsul güncəlləndi!');
       } else {
         // Yeni əlavə et
-        await axios.post(`${API}/products`, productData);
-        alert('Məhsul əlavə edildi!');
+        await mockAPI.createProduct(productData);
+        alert('✅ Məhsul əlavə edildi!');
       }
 
       resetForm();
@@ -103,7 +104,7 @@ const AdminPanel = () => {
       
     } catch (error) {
       console.error('Məhsul əməliyyat xətası:', error);
-      alert('Xəta baş verdi!');
+      alert('❌ Xəta baş verdi!');
     }
   };
 
