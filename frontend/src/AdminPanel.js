@@ -34,22 +34,24 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       
-      // Kateqoriyaları yüklə
-      const categoriesResponse = await axios.get(`${API}/categories`);
-      setCategories(categoriesResponse.data.categories);
+      // Initialize storage
+      initializeStorage();
+      
+      // Load categories (always needed)
+      const categoriesData = await mockAPI.getCategories();
+      setCategories(categoriesData.categories || []);
 
       if (activeTab === 'products') {
-        const productsResponse = await axios.get(`${API}/products`);
-        setProducts(productsResponse.data);
+        const productsData = await mockAPI.getProducts();
+        setProducts(productsData || []);
       } else if (activeTab === 'orders') {
-        const ordersResponse = await axios.get(`${API}/orders`);
-        setOrders(ordersResponse.data);
+        const ordersData = await mockAPI.getOrders();
+        setOrders(ordersData || []);
       } else if (activeTab === 'contact') {
-        const contactResponse = await axios.get(`${API}/contact-info`);
-        setContactInfo(contactResponse.data);
+        const contactData = await mockAPI.getContactInfo();
+        setContactInfo(contactData ||{});
       } else if (activeTab === 'categories') {
-        const categoriesResponse = await axios.get(`${API}/categories/all`);
-        setCategoriesList(categoriesResponse.data);
+        setCategoriesList(categoriesData.categories || []);
       }
     } catch (error) {
       console.error('Məlumat yükləmə xətası:', error);
