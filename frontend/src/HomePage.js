@@ -413,17 +413,7 @@ const HomePage = () => {
                     </div>
                   )}
 
-                  {selectedProduct.stock !== undefined && (
-                    <div className="mb-6">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-gray-600">Stok:</span>
-                        <span className={`font-semibold ${selectedProduct.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {selectedProduct.stock > 0 ? `${selectedProduct.stock} ədəd mövcuddur` : 'Stokda yoxdur'}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
+                  {/* Features/Specifications - without stock */}
                   {/* Bağla düyməsi */}
                   <div>
                     <button 
