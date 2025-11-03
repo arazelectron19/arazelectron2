@@ -248,12 +248,38 @@ const AdminPanel = () => {
     if (!window.confirm(`"${categoryName}" kateqoriyasını silmək istədiyinizə əminsiniz?`)) return;
 
     try {
+      // Try backend API first
+      if (API) {
+        const response = await axios.delete(`${API}/categories/${categoryId}`);
+        if (response.data && response.data.message) {
+          alert('✅ ' + response.data.message);
+          loadData(); // Reload categories
+          return;
+        }
+      }
+      
+      // Fallback to mockAPI if no backend
       await mockAPI.deleteCategory(categoryName);
       alert('✅ Kateqoriya silindi!');
-      loadData(); // Kateqoriyaları yenilə
+      loadData(); // Reload categories
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
-      alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
+      
+      // Handle specific error messages from backend
+      if (error.response && error.response.data && error.response.data.detail) {
+        const errorMessage = error.response.data.detail;
+        
+        // Check if it's a "has products" error
+        if (errorMessage.includes('məhsul var') || errorMessage.includes('products')) {
+          alert('⚠️ ' + errorMessage);
+        } else if (errorMessage.includes('tapılmadı') || error.response.status === 404) {
+          alert('❌ Kateqoriya tapılmadı!');
+        } else {
+          alert('❌ Xəta: ' + errorMessage);
+        }
+      } else {
+        alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
+      }
     }
   };
 
