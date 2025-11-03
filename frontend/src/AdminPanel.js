@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { mockAPI, initializeStorage } from "./mockAPI";
+import axios from "axios";
+
+const API = process.env.REACT_APP_BACKEND_URL || '';
 
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
