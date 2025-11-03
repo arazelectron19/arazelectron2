@@ -1077,7 +1077,18 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
                     </div>
                   </div>
                   <button
-                    onClick={() => deleteCategory(null, categoryName)}
+                    onClick={async () => {
+                      if (!window.confirm(`"${categoryName}" kateqoriyasını silmək istədiyinizə əminsiniz?`)) return;
+                      
+                      try {
+                        await mockAPI.deleteCategory(categoryName);
+                        alert('✅ Kateqoriya silindi!');
+                        loadData();
+                      } catch (error) {
+                        console.error('Kateqoriya silmə xətası:', error);
+                        alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
+                      }
+                    }}
                     className="text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1 rounded transition-colors"
                     data-testid={`delete-category-${index}`}
                     title="Kateqoriyanı sil"
