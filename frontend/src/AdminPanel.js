@@ -1082,8 +1082,16 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
                       
                       try {
                         await mockAPI.deleteCategory(categoryName);
+                        
+                        // Update local state instead of reloading
+                        const updatedCategories = categoriesList.filter(cat => {
+                          const name = typeof cat === 'string' ? cat : cat?.name;
+                          return name !== categoryName;
+                        });
+                        setCategoriesList(updatedCategories);
+                        setCategories(updatedCategories);
+                        
                         alert('✅ Kateqoriya silindi!');
-                        loadData();
                       } catch (error) {
                         console.error('Kateqoriya silmə xətası:', error);
                         alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
