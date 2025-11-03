@@ -1050,35 +1050,43 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
 
       {/* Mövcud kateqoriyalar */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Mövcud Kateqoriyalar ({categoriesList.length})</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          Mövcud Kateqoriyalar ({Array.isArray(categoriesList) ? categoriesList.length : 0})
+        </h3>
         
-        {categoriesList.length === 0 ? (
+        {!Array.isArray(categoriesList) || categoriesList.length === 0 ? (
           <p className="text-gray-500 text-center py-8">Hələlik kateqoriya yoxdur</p>
         ) : (
           <div className="space-y-3">
-            {categoriesList.map((category, index) => (
-              <div 
-                key={category.id} 
-                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
-                data-testid={`category-item-${category.id}`}
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl">{index === 0 ? '📱' : index === 1 ? '💻' : index === 2 ? '📷' : index === 3 ? '❄️' : index === 4 ? '💻' : index === 5 ? '🖥️' : '🔌'}</span>
-                  <div>
-                    <h4 className="font-medium text-gray-900">{category.name}</h4>
-                    <p className="text-sm text-gray-500">ID: {category.id.slice(-8)}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => onDeleteCategory(category.id, category.name)}
-                  className="text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1 rounded transition-colors"
-                  data-testid={`delete-category-${category.id}`}
-                  title="Kateqoriyanı sil"
+            {categoriesList.map((category, index) => {
+              // categoriesList is array of strings, not objects
+              const categoryName = typeof category === 'string' ? category : (category?.name || 'Unnamed');
+              const categoryIcon = index === 0 ? '📱' : index === 1 ? '🔊' : index === 2 ? '📷' : index === 3 ? '❄️' : index === 4 ? '💻' : index === 5 ? '🖥️' : '🔌';
+              
+              return (
+                <div 
+                  key={`cat-${index}-${categoryName}`}
+                  className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  data-testid={`category-item-${index}`}
                 >
-                  🗑️ Sil
-                </button>
-              </div>
-            ))}
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">{categoryIcon}</span>
+                    <div>
+                      <h4 className="font-medium text-gray-900">{categoryName}</h4>
+                      <p className="text-sm text-gray-500">#{index + 1}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => deleteCategory(null, categoryName)}
+                    className="text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1 rounded transition-colors"
+                    data-testid={`delete-category-${index}`}
+                    title="Kateqoriyanı sil"
+                  >
+                    🗑️ Sil
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
