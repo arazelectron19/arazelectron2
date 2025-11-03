@@ -4,6 +4,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
+// Admin Panel - v2.1 - Fixed category deletion with backend integration
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
