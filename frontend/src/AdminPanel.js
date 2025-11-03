@@ -1088,13 +1088,14 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
         ) : (
           <div className="space-y-3">
             {categoriesList.map((category, index) => {
-              // categoriesList is array of strings, not objects
+              // categoriesList can be array of strings or objects {id, name}
               const categoryName = typeof category === 'string' ? category : (category?.name || 'Unnamed');
+              const categoryId = typeof category === 'object' && category?.id ? category.id : null;
               const categoryIcon = index === 0 ? '📱' : index === 1 ? '🔊' : index === 2 ? '📷' : index === 3 ? '❄️' : index === 4 ? '💻' : index === 5 ? '🖥️' : '🔌';
               
               return (
                 <div 
-                  key={`cat-${index}-${categoryName}`}
+                  key={categoryId || `cat-${index}-${categoryName}`}
                   className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
                   data-testid={`category-item-${index}`}
                 >
@@ -1106,26 +1107,7 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
                     </div>
                   </div>
                   <button
-                    onClick={async () => {
-                      if (!window.confirm(`"${categoryName}" kateqoriyasını silmək istədiyinizə əminsiniz?`)) return;
-                      
-                      try {
-                        await mockAPI.deleteCategory(categoryName);
-                        
-                        // Update local state instead of reloading
-                        const updatedCategories = categoriesList.filter(cat => {
-                          const name = typeof cat === 'string' ? cat : cat?.name;
-                          return name !== categoryName;
-                        });
-                        setCategoriesList(updatedCategories);
-                        setCategories(updatedCategories);
-                        
-                        alert('✅ Kateqoriya silindi!');
-                      } catch (error) {
-                        console.error('Kateqoriya silmə xətası:', error);
-                        alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
-                      }
-                    }}
+                    onClick={() => onDeleteCategory(categoryId, categoryName)}
                     className="text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1 rounded transition-colors"
                     data-testid={`delete-category-${index}`}
                     title="Kateqoriyanı sil"
