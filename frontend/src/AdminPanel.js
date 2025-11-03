@@ -42,7 +42,20 @@ const AdminPanel = () => {
       initializeStorage();
       
       // Load categories (always needed)
-      const categoriesData = await mockAPI.getCategories();
+      let categoriesData;
+      if (API) {
+        try {
+          // Try to load from backend with full details
+          const response = await axios.get(`${API}/categories/all`);
+          categoriesData = { categories: response.data }; // Array of {id, name} objects
+        } catch (backendError) {
+          console.warn('Backend categories failed, using mockAPI:', backendError.message);
+          categoriesData = await mockAPI.getCategories();
+        }
+      } else {
+        categoriesData = await mockAPI.getCategories();
+      }
+      
       setCategories(categoriesData.categories || []);
 
       if (activeTab === 'products') {
