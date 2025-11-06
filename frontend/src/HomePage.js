@@ -188,6 +188,7 @@ const HomePage = () => {
                   );
                 })}
               </div>
+              )}
             </div>
           </aside>
 
