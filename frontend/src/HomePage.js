@@ -11,6 +11,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(true);
 
   useEffect(() => {
     loadData();
