@@ -51,7 +51,7 @@ const AdminPanel = () => {
       if (API) {
         try {
           // Try to load from backend with full details
-          const response = await axios.get(`${API}/categories/all`);
+          const response = await axios.get(`${API}/api/categories/all`);
           categoriesData = { categories: response.data }; // Array of {id, name} objects
         } catch (backendError) {
           console.warn('Backend categories failed, using mockAPI:', backendError.message);
