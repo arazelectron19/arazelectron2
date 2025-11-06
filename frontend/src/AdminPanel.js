@@ -301,7 +301,6 @@ const AdminPanel = () => {
       }, 1500);
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
-      console.error('Error details:', error.response);
       
       // Handle specific error messages from backend
       if (error.response && error.response.data && error.response.data.detail) {
