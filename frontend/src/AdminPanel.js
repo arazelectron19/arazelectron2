@@ -646,9 +646,15 @@ const AdminPanel = () => {
                         data-testid="product-category-select"
                       >
                         <option value="">Seçin...</option>
-                        {categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
-                        ))}
+                        {categories.map(category => {
+                          const categoryName = typeof category === 'string' ? category : (category?.name || '');
+                          const categoryValue = typeof category === 'string' ? category : (category?.name || '');
+                          return (
+                            <option key={categoryValue} value={categoryValue}>
+                              {categoryName}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>
