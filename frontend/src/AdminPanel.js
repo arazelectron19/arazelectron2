@@ -281,7 +281,7 @@ const AdminPanel = () => {
     try {
       // Try backend API first
       if (API && categoryToDelete.id) {
-        const response = await axios.delete(`${API}/categories/${categoryToDelete.id}`);
+        const response = await axios.delete(`${API}/api/categories/${categoryToDelete.id}`);
         if (response.data && response.data.message) {
           setCategoryDeleteSuccess(true);
           setTimeout(() => {
