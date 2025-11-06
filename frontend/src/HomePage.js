@@ -143,13 +143,15 @@ const HomePage = () => {
           {/* Sol tərəf - Kataloq */}
           <aside className="lg:w-48 flex-shrink-0">
             <div className="bg-white rounded-lg shadow-md p-4 sticky top-24">
+              {/* Mobile: clickable başlıq, Desktop: sadə başlıq */}
               <button
                 onClick={() => setIsCatalogOpen(!isCatalogOpen)}
-                className="w-full flex items-center justify-between text-lg font-bold text-gray-900 mb-3 hover:text-orange-600 transition-colors"
+                className="w-full flex items-center justify-between text-lg font-bold text-gray-900 mb-3 lg:cursor-default lg:pointer-events-none hover:text-orange-600 lg:hover:text-gray-900 transition-colors"
               >
                 <span>📦 Kataloq</span>
+                {/* Ox yalnız mobile-da görünür */}
                 <svg 
-                  className={`w-5 h-5 transition-transform duration-200 ${isCatalogOpen ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 transition-transform duration-200 lg:hidden ${isCatalogOpen ? 'rotate-180' : ''}`}
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -158,8 +160,8 @@ const HomePage = () => {
                 </svg>
               </button>
               
-              {isCatalogOpen && (
-                <div className="space-y-1">
+              {/* Mobile: conditional, Desktop: həmişə göstər */}
+              <div className={`space-y-1 ${isCatalogOpen ? 'block' : 'hidden'} lg:block`}>
                 <button
                   onClick={() => setSelectedCategory('all')}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
