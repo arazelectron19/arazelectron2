@@ -19,6 +19,8 @@ const AdminPanel = () => {
   const [productToDelete, setProductToDelete] = useState(null);
   const [showDeleteCategoryConfirm, setShowDeleteCategoryConfirm] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [categoryDeleteError, setCategoryDeleteError] = useState(null);
+  const [categoryDeleteSuccess, setCategoryDeleteSuccess] = useState(false);
   const showBackendWarning = false; // Static site - no backend warning needed
 
   // Form state
