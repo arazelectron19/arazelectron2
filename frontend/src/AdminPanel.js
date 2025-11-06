@@ -271,25 +271,34 @@ const AdminPanel = () => {
   const handleDeleteCategoryConfirm = async () => {
     if (!categoryToDelete) return;
 
+    setCategoryDeleteError(null);
+    setCategoryDeleteSuccess(false);
+
     try {
       // Try backend API first
       if (API) {
         const response = await axios.delete(`${API}/categories/${categoryToDelete.id}`);
         if (response.data && response.data.message) {
-          alert('✅ ' + response.data.message);
-          setShowDeleteCategoryConfirm(false);
-          setCategoryToDelete(null);
-          loadData(); // Reload categories
+          setCategoryDeleteSuccess(true);
+          setTimeout(() => {
+            setShowDeleteCategoryConfirm(false);
+            setCategoryToDelete(null);
+            setCategoryDeleteSuccess(false);
+            loadData(); // Reload categories
+          }, 1500);
           return;
         }
       }
       
       // Fallback to mockAPI if no backend
       await mockAPI.deleteCategory(categoryToDelete.name);
-      alert('✅ Kateqoriya silindi!');
-      setShowDeleteCategoryConfirm(false);
-      setCategoryToDelete(null);
-      loadData(); // Reload categories
+      setCategoryDeleteSuccess(true);
+      setTimeout(() => {
+        setShowDeleteCategoryConfirm(false);
+        setCategoryToDelete(null);
+        setCategoryDeleteSuccess(false);
+        loadData(); // Reload categories
+      }, 1500);
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
       
@@ -299,24 +308,23 @@ const AdminPanel = () => {
         
         // Check if it's a "has products" error
         if (errorMessage.includes('məhsul var') || errorMessage.includes('products')) {
-          alert('⚠️ ' + errorMessage);
+          setCategoryDeleteError(errorMessage);
         } else if (errorMessage.includes('tapılmadı') || error.response.status === 404) {
-          alert('❌ Kateqoriya tapılmadı!');
+          setCategoryDeleteError('Kateqoriya tapılmadı!');
         } else {
-          alert('❌ Xəta: ' + errorMessage);
+          setCategoryDeleteError(errorMessage);
         }
       } else {
-        alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
+        setCategoryDeleteError('Kateqoriya silmə zamanı xəta baş verdi!');
       }
-      
-      setShowDeleteCategoryConfirm(false);
-      setCategoryToDelete(null);
     }
   };
 
   const handleDeleteCategoryCancel = () => {
     setShowDeleteCategoryConfirm(false);
     setCategoryToDelete(null);
+    setCategoryDeleteError(null);
+    setCategoryDeleteSuccess(false);
   };
 
   return (
