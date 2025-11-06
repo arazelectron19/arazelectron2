@@ -261,22 +261,32 @@ const AdminPanel = () => {
   };
 
   const deleteCategory = async (categoryId, categoryName) => {
-    if (!window.confirm(`"${categoryName}" kateqoriyasını silmək istədiyinizə əminsiniz?`)) return;
+    // Show confirmation modal instead of window.confirm
+    setCategoryToDelete({ id: categoryId, name: categoryName });
+    setShowDeleteCategoryConfirm(true);
+  };
+
+  const handleDeleteCategoryConfirm = async () => {
+    if (!categoryToDelete) return;
 
     try {
       // Try backend API first
       if (API) {
-        const response = await axios.delete(`${API}/categories/${categoryId}`);
+        const response = await axios.delete(`${API}/categories/${categoryToDelete.id}`);
         if (response.data && response.data.message) {
           alert('✅ ' + response.data.message);
+          setShowDeleteCategoryConfirm(false);
+          setCategoryToDelete(null);
           loadData(); // Reload categories
           return;
         }
       }
       
       // Fallback to mockAPI if no backend
-      await mockAPI.deleteCategory(categoryName);
+      await mockAPI.deleteCategory(categoryToDelete.name);
       alert('✅ Kateqoriya silindi!');
+      setShowDeleteCategoryConfirm(false);
+      setCategoryToDelete(null);
       loadData(); // Reload categories
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
@@ -296,7 +306,15 @@ const AdminPanel = () => {
       } else {
         alert('❌ Kateqoriya silmə zamanı xəta baş verdi!');
       }
+      
+      setShowDeleteCategoryConfirm(false);
+      setCategoryToDelete(null);
     }
+  };
+
+  const handleDeleteCategoryCancel = () => {
+    setShowDeleteCategoryConfirm(false);
+    setCategoryToDelete(null);
   };
 
   return (
