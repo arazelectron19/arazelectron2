@@ -448,6 +448,45 @@ const AdminPanel = () => {
         </div>
       )}
 
+      {/* Add Category Modal */}
+      {showAddCategoryModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">
+              Kateqoriya əlavə et
+            </h3>
+            
+            {/* Success Message */}
+            {addCategorySuccess && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-medium">✅ Kateqoriya uğurla əlavə edildi!</p>
+              </div>
+            )}
+            
+            {/* Error Message */}
+            {addCategoryError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 font-medium">❌ {addCategoryError}</p>
+              </div>
+            )}
+            
+            {/* Button */}
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => {
+                  setShowAddCategoryModal(false);
+                  setAddCategoryError(null);
+                  setAddCategorySuccess(false);
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 font-medium"
+              >
+                Bağla
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
