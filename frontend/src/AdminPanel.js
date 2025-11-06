@@ -349,6 +349,36 @@ const AdminPanel = () => {
         </div>
       )}
 
+      {/* Delete Category Confirmation Modal */}
+      {showDeleteCategoryConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">
+              Kateqoriyanı sil?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              "<span className="font-semibold">{categoryToDelete?.name}</span>" kateqoriyasını silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq olmaz.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={handleDeleteCategoryCancel}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 font-medium"
+                data-testid="delete-category-cancel-button"
+              >
+                Ləğv et
+              </button>
+              <button
+                onClick={handleDeleteCategoryConfirm}
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium"
+                data-testid="delete-category-confirm-button"
+              >
+                Bəli, Sil
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
