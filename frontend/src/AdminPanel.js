@@ -251,17 +251,51 @@ const AdminPanel = () => {
 
   const addCategory = async (categoryName) => {
     if (!categoryName.trim()) {
-      alert('Kateqoriya adını daxil edin!');
+      setAddCategoryError('Kateqoriya adını daxil edin!');
+      setShowAddCategoryModal(true);
       return;
     }
 
+    setAddCategoryError(null);
+    setAddCategorySuccess(false);
+
     try {
+      // Try backend API first
+      if (API) {
+        const response = await axios.post(`${API}/api/categories`, {
+          name: categoryName.trim()
+        });
+        
+        if (response.data) {
+          setAddCategorySuccess(true);
+          setShowAddCategoryModal(true);
+          setTimeout(() => {
+            setShowAddCategoryModal(false);
+            setAddCategorySuccess(false);
+            loadData(); // Reload categories
+          }, 1500);
+          return;
+        }
+      }
+      
+      // Fallback to mockAPI
       await mockAPI.createCategory(categoryName.trim());
-      alert('✅ Kateqoriya əlavə edildi!');
-      loadData(); // Kateqoriyaları yenilə
+      setAddCategorySuccess(true);
+      setShowAddCategoryModal(true);
+      setTimeout(() => {
+        setShowAddCategoryModal(false);
+        setAddCategorySuccess(false);
+        loadData(); // Reload categories
+      }, 1500);
     } catch (error) {
       console.error('Kateqoriya əlavə etmə xətası:', error);
-      alert('❌ Kateqoriya əlavə etmə zamanı xəta baş verdi!');
+      
+      if (error.response && error.response.data && error.response.data.detail) {
+        setAddCategoryError(error.response.data.detail);
+      } else {
+        setAddCategoryError('Kateqoriya əlavə etmə zamanı xəta baş verdi!');
+      }
+      setShowAddCategoryModal(true);
     }
   };
 
