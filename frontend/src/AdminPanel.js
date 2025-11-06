@@ -366,24 +366,46 @@ const AdminPanel = () => {
             <h3 className="text-lg font-bold text-gray-900 mb-4">
               Kateqoriyanı sil?
             </h3>
-            <p className="text-gray-600 mb-6">
-              "<span className="font-semibold">{categoryToDelete?.name}</span>" kateqoriyasını silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq olmaz.
-            </p>
-            <div className="flex justify-end space-x-3">
+            
+            {/* Success Message */}
+            {categoryDeleteSuccess && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-medium">✅ Kateqoriya uğurla silindi!</p>
+              </div>
+            )}
+            
+            {/* Error Message */}
+            {categoryDeleteError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 font-medium">❌ {categoryDeleteError}</p>
+              </div>
+            )}
+            
+            {/* Confirmation Text */}
+            {!categoryDeleteSuccess && !categoryDeleteError && (
+              <p className="text-gray-600 mb-6">
+                "<span className="font-semibold">{categoryToDelete?.name}</span>" kateqoriyasını silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq olmaz.
+              </p>
+            )}
+            
+            {/* Buttons */}
+            <div className="flex justify-end space-x-3 mt-6">
               <button
                 onClick={handleDeleteCategoryCancel}
                 className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 font-medium"
                 data-testid="delete-category-cancel-button"
               >
-                Ləğv et
+                {categoryDeleteError ? 'Bağla' : 'Ləğv et'}
               </button>
-              <button
-                onClick={handleDeleteCategoryConfirm}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium"
-                data-testid="delete-category-confirm-button"
-              >
-                Bəli, Sil
-              </button>
+              {!categoryDeleteSuccess && !categoryDeleteError && (
+                <button
+                  onClick={handleDeleteCategoryConfirm}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium"
+                  data-testid="delete-category-confirm-button"
+                >
+                  Bəli, Sil
+                </button>
+              )}
             </div>
           </div>
         </div>
