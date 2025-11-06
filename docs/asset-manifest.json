@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/arazelectron1/static/css/main.306734c7.css",
-    "main.js": "/arazelectron1/static/js/main.5a59e647.js",
+    "main.css": "/arazelectron1/static/css/main.aaac323e.css",
+    "main.js": "/arazelectron1/static/js/main.54a29772.js",
     "index.html": "/arazelectron1/index.html",
-    "main.306734c7.css.map": "/arazelectron1/static/css/main.306734c7.css.map",
-    "main.5a59e647.js.map": "/arazelectron1/static/js/main.5a59e647.js.map"
+    "main.aaac323e.css.map": "/arazelectron1/static/css/main.aaac323e.css.map",
+    "main.54a29772.js.map": "/arazelectron1/static/js/main.54a29772.js.map"
   },
   "entrypoints": [
-    "static/css/main.306734c7.css",
-    "static/js/main.5a59e647.js"
+    "static/css/main.aaac323e.css",
+    "static/js/main.54a29772.js"
   ]
 }
