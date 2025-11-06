@@ -274,10 +274,6 @@ const AdminPanel = () => {
     setCategoryDeleteError(null);
     setCategoryDeleteSuccess(false);
 
-    console.log('Deleting category:', categoryToDelete);
-    console.log('API URL:', API);
-    console.log('Delete URL:', `${API}/categories/${categoryToDelete.id}`);
-
     try {
       // Try backend API first
       if (API && categoryToDelete.id) {
