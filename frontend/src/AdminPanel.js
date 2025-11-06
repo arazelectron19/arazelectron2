@@ -274,9 +274,13 @@ const AdminPanel = () => {
     setCategoryDeleteError(null);
     setCategoryDeleteSuccess(false);
 
+    console.log('Deleting category:', categoryToDelete);
+    console.log('API URL:', API);
+    console.log('Delete URL:', `${API}/categories/${categoryToDelete.id}`);
+
     try {
       // Try backend API first
-      if (API) {
+      if (API && categoryToDelete.id) {
         const response = await axios.delete(`${API}/categories/${categoryToDelete.id}`);
         if (response.data && response.data.message) {
           setCategoryDeleteSuccess(true);
@@ -290,7 +294,7 @@ const AdminPanel = () => {
         }
       }
       
-      // Fallback to mockAPI if no backend
+      // Fallback to mockAPI if no backend or no categoryId
       await mockAPI.deleteCategory(categoryToDelete.name);
       setCategoryDeleteSuccess(true);
       setTimeout(() => {
@@ -301,6 +305,7 @@ const AdminPanel = () => {
       }, 1500);
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
+      console.error('Error details:', error.response);
       
       // Handle specific error messages from backend
       if (error.response && error.response.data && error.response.data.detail) {
