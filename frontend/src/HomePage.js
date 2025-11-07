@@ -37,6 +37,12 @@ const HomePage = () => {
     try {
       setLoading(true);
       
+      // Check version and clear cache if needed
+      const cacheCleared = checkAndClearCache();
+      if (cacheCleared) {
+        console.log('🔄 Cache cleared, forcing fresh data load');
+      }
+      
       // Initialize storage with mock data
       initializeStorage();
       
