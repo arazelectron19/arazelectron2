@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { mockAPI, initializeStorage } from "./mockAPI";
 import axios from "axios";
 import { APP_VERSION, hardRefreshIfNeeded } from "./version";
+import { USE_REMOTE_API } from "./config";
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
-// Admin Panel - v2.1 - Fixed category deletion with backend integration
+// Admin Panel - v3.0 - Fully static mode support
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
