@@ -282,8 +282,8 @@ async def migrate_category_ids():
         needs_update = False
         update_fields = {}
         
-        # Əgər categoryId yoxdursa amma category var
-        if not product.get("categoryId") and product.get("category"):
+        # Əgər categoryId yoxdursa və ya null-dursa amma category var
+        if (not product.get("categoryId") or product.get("categoryId") is None) and product.get("category"):
             cat_name = product["category"]
             # Try exact match first, then lowercase
             matching_id = category_map.get(cat_name) or category_map.get(cat_name.lower())
