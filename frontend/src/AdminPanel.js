@@ -47,6 +47,9 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       
+      // Check version and clear cache if needed
+      checkAndClearCache();
+      
       // Initialize storage
       initializeStorage();
       
