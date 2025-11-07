@@ -205,12 +205,15 @@ async def delete_category(category_id: str):
     if not category:
         raise HTTPException(status_code=404, detail="Kateqoriya tapılmadı")
     
-    # Bu kateqoriyada məhsul varmı yoxla
-    products_in_category = await db.products.count_documents({"category": category["name"]})
-    if products_in_category > 0:
+    # Bu kateqoriyada məhsul varmı yoxla - ID və name hər ikisi ilə
+    products_by_id = await db.products.count_documents({"categoryId": category_id})
+    products_by_name = await db.products.count_documents({"category": category["name"]})
+    total_products = products_by_id + products_by_name
+    
+    if total_products > 0:
         raise HTTPException(
             status_code=400, 
-            detail=f"Bu kateqoriyada {products_in_category} məhsul var. Əvvəlcə məhsulları silin və ya başqa kateqoriyaya köçürün"
+            detail=f"Bu kateqoriyada {total_products} məhsul var. Əvvəlcə məhsulları silin və ya başqa kateqoriyaya köçürün"
         )
     
     # Kateqoriyanı sil
