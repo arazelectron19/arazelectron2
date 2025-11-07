@@ -82,7 +82,7 @@ const AdminPanel = () => {
 
       if (activeTab === 'products') {
         let productsData;
-        if (API) {
+        if (USE_REMOTE_API && API) {
           try {
             const response = await axios.get(`${API}/api/products`);
             productsData = response.data || [];
@@ -91,6 +91,7 @@ const AdminPanel = () => {
             productsData = await mockAPI.getProducts();
           }
         } else {
+          // Static mode - use mockAPI
           productsData = await mockAPI.getProducts();
         }
         setProducts(productsData || []);
