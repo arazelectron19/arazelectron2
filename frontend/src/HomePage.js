@@ -37,10 +37,11 @@ const HomePage = () => {
     try {
       setLoading(true);
       
-      // Check version and clear cache if needed
-      const cacheCleared = checkAndClearCache();
-      if (cacheCleared) {
-        console.log('🔄 Cache cleared, forcing fresh data load');
+      // Check version and hard reload if needed
+      const reloading = await hardRefreshIfNeeded();
+      if (reloading) {
+        // Will reload page, so return early
+        return;
       }
       
       // Initialize storage with mock data
