@@ -177,13 +177,24 @@ const HomePage = () => {
                   .map(category => {
                     // Handle both string and object {id, name} formats
                     const categoryName = typeof category === 'string' ? category : (category?.name || '');
-                    const count = products.filter(p => p.category === categoryName).length;
-                    return { name: categoryName, count };
+                    const categoryId = typeof category === 'object' && category?.id ? String(category.id) : null;
+                    
+                    // Count products by both name and ID (normalized)
+                    const count = products.filter(p => {
+                      const productCategory = p.category || '';
+                      const productCategoryId = p.categoryId ? String(p.categoryId) : null;
+                      
+                      // Match by name OR by ID
+                      return productCategory === categoryName || 
+                             (categoryId && productCategoryId && productCategoryId === categoryId);
+                    }).length;
+                    
+                    return { name: categoryName, id: categoryId, count };
                   })
                   .filter(item => item.count > 0) // Only show categories with products
                   .map(item => (
                     <button
-                      key={item.name}
+                      key={item.id || item.name}
                       onClick={() => setSelectedCategory(item.name)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                         selectedCategory === item.name
