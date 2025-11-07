@@ -247,9 +247,10 @@ const AdminPanel = () => {
     
     try {
       // Try backend API first
-      if (API) {
+      if (USE_REMOTE_API && API) {
         await axios.delete(`${API}/api/products/${productToDelete}`);
       } else {
+        // Static mode
         await mockAPI.deleteProduct(productToDelete);
       }
       
