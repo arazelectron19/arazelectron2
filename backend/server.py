@@ -267,7 +267,12 @@ async def migrate_category_ids():
     """Məhsullarda category name-dən categoryId-yə migration"""
     # Bütün kateqoriyaları al
     categories = await db.categories.find().to_list(None)
-    category_map = {cat["name"].lower(): cat["id"] for cat in categories}
+    category_map = {}
+    for cat in categories:
+        # Case-insensitive mapping
+        category_map[cat["name"].lower()] = cat["id"]
+        # Exact match mapping
+        category_map[cat["name"]] = cat["id"]
     
     # Bütün məhsulları al
     all_products = await db.products.find().to_list(None)
@@ -279,9 +284,12 @@ async def migrate_category_ids():
         
         # Əgər categoryId yoxdursa amma category var
         if not product.get("categoryId") and product.get("category"):
-            cat_name_lower = product["category"].lower()
-            if cat_name_lower in category_map:
-                update_fields["categoryId"] = category_map[cat_name_lower]
+            cat_name = product["category"]
+            # Try exact match first, then lowercase
+            matching_id = category_map.get(cat_name) or category_map.get(cat_name.lower())
+            
+            if matching_id:
+                update_fields["categoryId"] = matching_id
                 needs_update = True
         
         # Update if needed
