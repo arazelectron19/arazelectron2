@@ -1,9 +1,16 @@
 // Global app version for cache busting
-export const APP_VERSION = "6";
+export const APP_VERSION = "7";
 
 // Hard refresh if version mismatch
 export const hardRefreshIfNeeded = async () => {
   try {
+    // Unregister all service workers first
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+      console.log('🗑️ Service workers unregistered');
+    }
+    
     const stored = localStorage.getItem('APP_VERSION');
     if (stored !== APP_VERSION) {
       console.log(`🔄 Version mismatch: ${stored} → ${APP_VERSION}. Hard refresh...`);
@@ -11,7 +18,7 @@ export const hardRefreshIfNeeded = async () => {
       // Clear storages
       localStorage.clear();
       
-      // Best-effort wipe of IndexedDB
+      // Best-effort IndexedDB wipe
       if (window.indexedDB) {
         const dbs = await indexedDB.databases?.() || [];
         await Promise.all(dbs.map(d => d.name && new Promise(res => {
@@ -21,16 +28,9 @@ export const hardRefreshIfNeeded = async () => {
         console.log('🗑️ IndexedDB cleared');
       }
       
-      // Unregister service workers
-      if ('serviceWorker' in navigator) {
-        const regs = await navigator.serviceWorker.getRegistrations();
-        await Promise.all(regs.map(r => r.unregister()));
-        console.log('🗑️ Service workers unregistered');
-      }
-      
       localStorage.setItem('APP_VERSION', APP_VERSION);
       
-      // Hard reload once to pick fresh assets
+      // Hard reload with version query
       console.log('♻️ Hard reloading...');
       window.location.replace(window.location.pathname + '?v=' + APP_VERSION);
       return true;
