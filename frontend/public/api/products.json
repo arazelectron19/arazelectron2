@@ -1,0 +1,35 @@
+[
+  {
+    "id": "prod-1",
+    "name": "Canon EOS M50 Mark II",
+    "category": "Kamera",
+    "categoryId": "cat-1",
+    "price": 2499,
+    "description": "Professional kamera - 24.1MP sensor, 4K video",
+    "images": ["https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500"],
+    "stock": 15,
+    "is_featured": true
+  },
+  {
+    "id": "prod-2",
+    "name": "Samsung Galaxy S24",
+    "category": "Smartfon",
+    "categoryId": "cat-2",
+    "price": 3299,
+    "description": "Flagship smartfon - 200MP kamera, Snapdragon 8 Gen 3",
+    "images": ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"],
+    "stock": 25,
+    "is_featured": true
+  },
+  {
+    "id": "prod-3",
+    "name": "Dell XPS 15",
+    "category": "Kompüter",
+    "categoryId": "cat-3",
+    "price": 5999,
+    "description": "Premium laptop - Intel i9, 32GB RAM, 4K display",
+    "images": ["https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500"],
+    "stock": 10,
+    "is_featured": false
+  }
+]
