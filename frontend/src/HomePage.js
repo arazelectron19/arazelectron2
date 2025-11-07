@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { mockAPI, initializeStorage } from "./mockAPI";
-import axios from "axios";
-import { APP_VERSION, hardRefreshIfNeeded } from "./version";
-import { USE_REMOTE_API, STATIC_DATA } from "./config";
-
-const API = process.env.REACT_APP_BACKEND_URL || '';
+import { hardRefreshIfNeeded } from "./version";
+import { dataService } from "./dataService";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
