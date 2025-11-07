@@ -76,7 +76,18 @@ const AdminPanel = () => {
       setCategories(categoriesData.categories || []);
 
       if (activeTab === 'products') {
-        const productsData = await mockAPI.getProducts();
+        let productsData;
+        if (API) {
+          try {
+            const response = await axios.get(`${API}/api/products`);
+            productsData = response.data || [];
+          } catch (err) {
+            console.warn('Backend products failed, using mockAPI:', err.message);
+            productsData = await mockAPI.getProducts();
+          }
+        } else {
+          productsData = await mockAPI.getProducts();
+        }
         setProducts(productsData || []);
       } else if (activeTab === 'orders') {
         const ordersData = await mockAPI.getOrders();
