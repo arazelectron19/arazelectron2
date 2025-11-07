@@ -148,18 +148,16 @@ const AdminPanel = () => {
       };
 
       // Try backend API first
-      if (API) {
+      if (USE_REMOTE_API && API) {
         if (editingProduct) {
-          // Update via backend
           await axios.put(`${API}/api/products/${editingProduct.id}`, productData);
           alert('✅ Məhsul güncəlləndi!');
         } else {
-          // Create via backend
           await axios.post(`${API}/api/products`, productData);
           alert('✅ Məhsul əlavə edildi!');
         }
       } else {
-        // Fallback to mockAPI
+        // Static mode - use mockAPI (localStorage)
         if (editingProduct) {
           await mockAPI.updateProduct(editingProduct.id, productData);
           alert('✅ Məhsul güncəlləndi!');
