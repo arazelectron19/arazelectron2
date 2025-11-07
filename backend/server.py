@@ -262,6 +262,56 @@ async def cleanup_orphan_products():
     
     return {"message": f"{orphan_count} orphan məhsul Uncategorized-ə köçürüldü", "count": orphan_count}
 
+@api_router.post("/categories/keep-only-kamera")
+async def keep_only_kamera():
+    """Yalnız Kamera kateqoriyasını saxla, qalanlarını sil və məhsulları köçür"""
+    # Kamera kateqoriyasını tap/yarat
+    kamera = await db.categories.find_one({"name": {"$regex": "^kamera$", "$options": "i"}})
+    
+    if not kamera:
+        # Kamera yoxdursa yarat
+        kamera_id = str(uuid.uuid4())
+        kamera = {"id": kamera_id, "name": "Kamera"}
+        await db.categories.insert_one(kamera)
+    
+    # Bütün kateqoriyaları al
+    all_categories = await db.categories.find().to_list(None)
+    deleted_count = 0
+    
+    # Kamera istisna olmaqla sil
+    for category in all_categories:
+        if category["name"].lower() != "kamera":
+            # Bu kateqoriyadakı məhsulları Kamera-ya köçür
+            # categoryId və category field-i ilə
+            await db.products.update_many(
+                {"$or": [
+                    {"categoryId": category["id"]},
+                    {"category": category["name"]}
+                ]},
+                {"$set": {
+                    "categoryId": kamera["id"],
+                    "category": kamera["name"]
+                }}
+            )
+            
+            # Kateqoriyanı sil
+            await db.categories.delete_one({"id": category["id"]})
+            deleted_count += 1
+    
+    # Məhsul sayını hesabla
+    product_count = await db.products.count_documents({
+        "$or": [
+            {"categoryId": kamera["id"]},
+            {"category": kamera["name"]}
+        ]
+    })
+    
+    return {
+        "message": f"{deleted_count} kateqoriya silindi, bütün məhsullar Kamera-ya köçürüldü",
+        "deleted_categories": deleted_count,
+        "kamera_products": product_count
+    }
+
 # Məhsullar CRUD
 @api_router.post("/products", response_model=Product)
 async def create_product(product: ProductCreate):
