@@ -49,6 +49,15 @@ const AdminPanel = () => {
       // Initialize storage
       initializeStorage();
       
+      // Run orphan cleanup first (if backend available)
+      if (API) {
+        try {
+          await axios.post(`${API}/api/categories/cleanup-orphans`);
+        } catch (err) {
+          console.warn('Cleanup failed:', err.message);
+        }
+      }
+      
       // Load categories (always needed)
       let categoriesData;
       if (API) {
