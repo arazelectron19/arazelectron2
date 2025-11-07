@@ -569,7 +569,14 @@ const AdminPanel = () => {
                 alt="Araz Elektron Logo"
                 className="h-10 w-10 mr-3 object-contain"
               />
-              <h1 className="text-2xl font-bold text-orange-600">Araz Elektron - Admin Panel</h1>
+              <h1 className="text-2xl font-bold text-orange-600">
+                Araz Elektron - Admin Panel
+                {!USE_REMOTE_API && (
+                  <span className="ml-3 text-sm font-normal text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                    📦 Local Mode
+                  </span>
+                )}
+              </h1>
             </div>
             <a href="/" className="text-orange-600 hover:text-orange-700">
               ← Ana səhifəyə qayıt
@@ -578,8 +585,8 @@ const AdminPanel = () => {
         </div>
       </header>
 
-      {/* Backend Warning */}
-      {showBackendWarning && (
+      {/* Remove backend warning in static mode */}
+      {USE_REMOTE_API && showBackendWarning && (
         <div className="container mx-auto px-4 py-4">
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
             <div className="flex">
