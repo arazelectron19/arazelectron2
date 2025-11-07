@@ -15,6 +15,18 @@ const HomePage = () => {
 
   useEffect(() => {
     loadData();
+    
+    // Listen for product updates from AdminPanel
+    const handleProductsUpdate = () => {
+      console.log('Products updated, reloading...');
+      loadData();
+    };
+    
+    window.addEventListener('products-updated', handleProductsUpdate);
+    
+    return () => {
+      window.removeEventListener('products-updated', handleProductsUpdate);
+    };
   }, []);
 
   const loadData = async () => {
