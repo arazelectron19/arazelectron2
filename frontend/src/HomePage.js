@@ -173,22 +173,27 @@ const HomePage = () => {
                   Hamısı ({products.length})
                 </button>
                 
-                {categories.map(category => {
-                  const count = products.filter(p => p.category === category).length;
-                  return (
+                {categories
+                  .map(category => {
+                    // Handle both string and object {id, name} formats
+                    const categoryName = typeof category === 'string' ? category : (category?.name || '');
+                    const count = products.filter(p => p.category === categoryName).length;
+                    return { name: categoryName, count };
+                  })
+                  .filter(item => item.count > 0) // Only show categories with products
+                  .map(item => (
                     <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
+                      key={item.name}
+                      onClick={() => setSelectedCategory(item.name)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        selectedCategory === category
+                        selectedCategory === item.name
                           ? 'bg-orange-500 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      {category} ({count})
+                      {item.name} ({item.count})
                     </button>
-                  );
-                })}
+                  ))}
               </div>
             </div>
           </aside>
