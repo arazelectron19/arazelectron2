@@ -241,10 +241,19 @@ const AdminPanel = () => {
     setShowDeleteConfirm(false);
     
     try {
-      await mockAPI.deleteProduct(productToDelete);
+      // Try backend API first
+      if (API) {
+        await axios.delete(`${API}/api/products/${productToDelete}`);
+      } else {
+        await mockAPI.deleteProduct(productToDelete);
+      }
       
       // Uğurlu mesaj göstər
       alert('✅ Məhsul uğurla silindi!');
+      
+      // Clear cache
+      localStorage.removeItem('araz_categories');
+      localStorage.removeItem('araz_products');
       
       // Məlumatları yenilə
       await loadData();
