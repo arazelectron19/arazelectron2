@@ -65,7 +65,7 @@ const AdminPanel = () => {
       
       // Load categories (always needed)
       let categoriesData;
-      if (API) {
+      if (USE_REMOTE_API && API) {
         try {
           // Try to load from backend with full details
           const response = await axios.get(`${API}/api/categories/all`);
@@ -75,6 +75,7 @@ const AdminPanel = () => {
           categoriesData = await mockAPI.getCategories();
         }
       } else {
+        // Static mode
         categoriesData = await mockAPI.getCategories();
       }
       
