@@ -1,11 +1,11 @@
-// Feature flag for remote API usage - DISABLED for static mode
+// STATIC MODE - No remote API
 export const USE_REMOTE_API = false;
 
 // APP_VERSION for cache busting
-export const APP_VERSION = "7";
+export const APP_VERSION = "8";
 
-// Static data URLs (relative to public path)
-export const STATIC_DATA = {
+// Static data URLs (SSOT)
+export const STATIC_DATA_SOURCES = {
   categories: '/api/categories.json',
   products: '/api/products.json'
 };
