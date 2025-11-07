@@ -39,12 +39,40 @@ const HomePage = () => {
       // Initialize storage with mock data
       initializeStorage();
       
-      // Load from localStorage via mockAPI
-      const productsData = await mockAPI.getProducts();
-      setProducts(productsData || []);
+      // Try backend API first
+      let productsData, categoriesData;
       
-      const categoriesData = await mockAPI.getCategories();
-      setCategories(categoriesData.categories || []);
+      if (API) {
+        try {
+          // Load from backend
+          const [productsRes, categoriesRes] = await Promise.all([
+            axios.get(`${API}/api/products`),
+            axios.get(`${API}/api/categories/all`)
+          ]);
+          
+          productsData = productsRes.data || [];
+          categoriesData = categoriesRes.data || [];
+          
+          console.log('Loaded from backend:', {
+            products: productsData.length,
+            categories: categoriesData.length
+          });
+        } catch (backendError) {
+          console.warn('Backend failed, using mockAPI:', backendError.message);
+          // Fallback to mockAPI
+          productsData = await mockAPI.getProducts();
+          const catData = await mockAPI.getCategories();
+          categoriesData = catData.categories || [];
+        }
+      } else {
+        // No backend, use mockAPI
+        productsData = await mockAPI.getProducts();
+        const catData = await mockAPI.getCategories();
+        categoriesData = catData.categories || [];
+      }
+      
+      setProducts(productsData || []);
+      setCategories(categoriesData || []);
       
       const contactData = await mockAPI.getContactInfo();
       setContactInfo(contactData);
