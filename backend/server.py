@@ -220,6 +220,48 @@ async def delete_category(category_id: str):
     await db.categories.delete_one({"id": category_id})
     return {"message": "Kateqoriya silindi"}
 
+@api_router.post("/categories/cleanup-orphans")
+async def cleanup_orphan_products():
+    """Orphan məhsulları (kateqoriyası olmayan) Uncategorized-ə köçür"""
+    # Bütün kateqoriya ID-lərini al
+    categories = await db.categories.find().to_list(None)
+    valid_category_ids = {str(cat["id"]) for cat in categories}
+    valid_category_names = {cat["name"] for cat in categories}
+    
+    # Uncategorized kateqoriyasını yarat/tap
+    uncategorized = await db.categories.find_one({"name": "Uncategorized"})
+    if not uncategorized:
+        uncategorized_id = str(uuid.uuid4())
+        uncategorized = {"id": uncategorized_id, "name": "Uncategorized"}
+        await db.categories.insert_one(uncategorized)
+    
+    # Orphan məhsulları tap
+    all_products = await db.products.find().to_list(None)
+    orphan_count = 0
+    
+    for product in all_products:
+        # categoryId və ya category field-i yoxla
+        product_cat_id = str(product.get("categoryId", ""))
+        product_cat_name = product.get("category", "")
+        
+        is_orphan = (
+            (product_cat_id and product_cat_id not in valid_category_ids) or
+            (product_cat_name and product_cat_name not in valid_category_names and not product_cat_id)
+        )
+        
+        if is_orphan:
+            # Uncategorized-ə köçür
+            await db.products.update_one(
+                {"id": product["id"]},
+                {"$set": {
+                    "categoryId": uncategorized["id"],
+                    "category": uncategorized["name"]
+                }}
+            )
+            orphan_count += 1
+    
+    return {"message": f"{orphan_count} orphan məhsul Uncategorized-ə köçürüldü", "count": orphan_count}
+
 # Məhsullar CRUD
 @api_router.post("/products", response_model=Product)
 async def create_product(product: ProductCreate):
