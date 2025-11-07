@@ -316,6 +316,10 @@ const AdminPanel = () => {
       if (API && categoryToDelete.id) {
         const response = await axios.delete(`${API}/api/categories/${categoryToDelete.id}`);
         if (response.data && response.data.message) {
+          // Clear localStorage cache
+          localStorage.removeItem('araz_categories');
+          localStorage.removeItem('araz_products');
+          
           setCategoryDeleteSuccess(true);
           setTimeout(() => {
             setShowDeleteCategoryConfirm(false);
@@ -329,6 +333,11 @@ const AdminPanel = () => {
       
       // Fallback to mockAPI if no backend or no categoryId
       await mockAPI.deleteCategory(categoryToDelete.name);
+      
+      // Clear localStorage cache
+      localStorage.removeItem('araz_categories');
+      localStorage.removeItem('araz_products');
+      
       setCategoryDeleteSuccess(true);
       setTimeout(() => {
         setShowDeleteCategoryConfirm(false);
