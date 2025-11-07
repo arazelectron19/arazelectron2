@@ -131,14 +131,26 @@ const AdminPanel = () => {
         images: formData.image_urls.filter(url => url.trim())
       };
 
-      if (editingProduct) {
-        // Redaktə
-        await mockAPI.updateProduct(editingProduct.id, productData);
-        alert('✅ Məhsul güncəlləndi!');
+      // Try backend API first
+      if (API) {
+        if (editingProduct) {
+          // Update via backend
+          await axios.put(`${API}/api/products/${editingProduct.id}`, productData);
+          alert('✅ Məhsul güncəlləndi!');
+        } else {
+          // Create via backend
+          await axios.post(`${API}/api/products`, productData);
+          alert('✅ Məhsul əlavə edildi!');
+        }
       } else {
-        // Yeni əlavə et
-        await mockAPI.createProduct(productData);
-        alert('✅ Məhsul əlavə edildi!');
+        // Fallback to mockAPI
+        if (editingProduct) {
+          await mockAPI.updateProduct(editingProduct.id, productData);
+          alert('✅ Məhsul güncəlləndi!');
+        } else {
+          await mockAPI.createProduct(productData);
+          alert('✅ Məhsul əlavə edildi!');
+        }
       }
 
       // Clear localStorage to force refresh
