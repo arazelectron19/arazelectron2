@@ -41,19 +41,18 @@ const HomePage = () => {
       // Check version and hard reload if needed
       const reloading = await hardRefreshIfNeeded();
       if (reloading) {
-        // Will reload page, so return early
         return;
       }
       
       // Initialize storage with mock data
       initializeStorage();
       
-      // Try backend API first
+      // Load data based on mode
       let productsData, categoriesData;
       
-      if (API) {
+      if (USE_REMOTE_API && API) {
+        // Remote API mode
         try {
-          // Load from backend
           const [productsRes, categoriesRes] = await Promise.all([
             axios.get(`${API}/api/products`),
             axios.get(`${API}/api/categories/all`)
@@ -62,22 +61,49 @@ const HomePage = () => {
           productsData = productsRes.data || [];
           categoriesData = categoriesRes.data || [];
           
-          console.log('Loaded from backend:', {
+          console.log('✅ Loaded from backend:', {
             products: productsData.length,
             categories: categoriesData.length
           });
         } catch (backendError) {
-          console.warn('Backend failed, using mockAPI:', backendError.message);
-          // Fallback to mockAPI
+          console.warn('⚠️ Backend failed, using static data:', backendError.message);
+          // Fallback to static
+          const [productsRes, categoriesRes] = await Promise.all([
+            fetch(STATIC_DATA.products).then(r => r.json()),
+            fetch(STATIC_DATA.categories).then(r => r.json())
+          ]);
+          productsData = productsRes || [];
+          categoriesData = categoriesRes || [];
+        }
+      } else {
+        // Static mode - load from JSON files
+        try {
+          const [productsRes, categoriesRes] = await Promise.all([
+            fetch(STATIC_DATA.products).then(r => r.json()),
+            fetch(STATIC_DATA.categories).then(r => r.json())
+          ]);
+          productsData = productsRes || [];
+          categoriesData = categoriesRes || [];
+          
+          console.log('📦 Loaded from static files:', {
+            products: productsData.length,
+            categories: categoriesData.length
+          });
+          
+          // Seed localStorage on first run
+          if (!localStorage.getItem('araz_static_seeded')) {
+            localStorage.setItem('araz_products', JSON.stringify(productsData));
+            localStorage.setItem('araz_categories', JSON.stringify({categories: categoriesData}));
+            localStorage.setItem('araz_static_seeded', 'true');
+            console.log('🌱 Seeded localStorage from static files');
+          }
+        } catch (staticError) {
+          console.warn('⚠️ Static files failed, using mockAPI:', staticError.message);
+          // Ultimate fallback
           productsData = await mockAPI.getProducts();
           const catData = await mockAPI.getCategories();
           categoriesData = catData.categories || [];
         }
-      } else {
-        // No backend, use mockAPI
-        productsData = await mockAPI.getProducts();
-        const catData = await mockAPI.getCategories();
-        categoriesData = catData.categories || [];
       }
       
       setProducts(productsData || []);
@@ -87,8 +113,7 @@ const HomePage = () => {
       setContactInfo(contactData);
       
     } catch (error) {
-      console.error('Məlumat yükləmə xətası:', error);
-      // Initialize with empty data if error
+      console.error('❌ Data load error:', error);
       setProducts([]);
       setCategories([]);
     } finally {
