@@ -262,6 +262,42 @@ async def cleanup_orphan_products():
     
     return {"message": f"{orphan_count} orphan məhsul Uncategorized-ə köçürüldü", "count": orphan_count}
 
+@api_router.post("/products/migrate-category-ids")
+async def migrate_category_ids():
+    """Məhsullarda category name-dən categoryId-yə migration"""
+    # Bütün kateqoriyaları al
+    categories = await db.categories.find().to_list(None)
+    category_map = {cat["name"].lower(): cat["id"] for cat in categories}
+    
+    # Bütün məhsulları al
+    all_products = await db.products.find().to_list(None)
+    migrated_count = 0
+    
+    for product in all_products:
+        needs_update = False
+        update_fields = {}
+        
+        # Əgər categoryId yoxdursa amma category var
+        if not product.get("categoryId") and product.get("category"):
+            cat_name_lower = product["category"].lower()
+            if cat_name_lower in category_map:
+                update_fields["categoryId"] = category_map[cat_name_lower]
+                needs_update = True
+        
+        # Update if needed
+        if needs_update:
+            await db.products.update_one(
+                {"id": product["id"]},
+                {"$set": update_fields}
+            )
+            migrated_count += 1
+    
+    return {
+        "message": f"{migrated_count} məhsul categoryId ilə update edildi",
+        "migrated": migrated_count,
+        "total": len(all_products)
+    }
+
 @api_router.post("/categories/keep-only-kamera")
 async def keep_only_kamera():
     """Yalnız Kamera kateqoriyasını saxla, qalanlarını sil və məhsulları köçür"""
