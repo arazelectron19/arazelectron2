@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { mockAPI, initializeStorage } from "./mockAPI";
 import axios from "axios";
+import { APP_VERSION, checkAndClearCache } from "./version";
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
