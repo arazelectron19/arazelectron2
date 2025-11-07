@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { mockAPI, initializeStorage } from "./mockAPI";
 import axios from "axios";
-import { APP_VERSION, checkAndClearCache } from "./version";
+import { APP_VERSION, hardRefreshIfNeeded } from "./version";
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
