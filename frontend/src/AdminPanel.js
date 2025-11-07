@@ -112,8 +112,20 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Find selected category object to get both id and name
+      const selectedCategoryObj = categories.find(cat => {
+        const catName = typeof cat === 'string' ? cat : cat?.name;
+        return catName === formData.category;
+      });
+      
+      const categoryId = selectedCategoryObj && typeof selectedCategoryObj === 'object' 
+        ? selectedCategoryObj.id 
+        : null;
+      
       const productData = {
         ...formData,
+        categoryId: categoryId, // Store ID
+        category: formData.category, // Keep name for backward compatibility
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock) || 100,
         images: formData.image_urls.filter(url => url.trim())
@@ -129,6 +141,10 @@ const AdminPanel = () => {
         alert('✅ Məhsul əlavə edildi!');
       }
 
+      // Clear localStorage to force refresh
+      localStorage.removeItem('araz_categories');
+      localStorage.removeItem('araz_products');
+      
       resetForm();
       loadData();
       
