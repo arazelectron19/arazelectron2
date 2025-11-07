@@ -1,5 +1,5 @@
 // Global app version for cache busting
-export const APP_VERSION = "7";
+export const APP_VERSION = "8";
 
 // Hard refresh if version mismatch
 export const hardRefreshIfNeeded = async () => {
