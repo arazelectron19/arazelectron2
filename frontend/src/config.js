@@ -1,14 +1,14 @@
-// STATIC MODE - No remote API, No LocalStorage fallback
+// STATIC MODE - No server, No LocalStorage seed
 export const USE_REMOTE_API = false;
 
-// APP_VERSION - INCREMENT ON EACH DEPLOY for hard cache reset
-export const APP_VERSION = "10";
+// APP_VERSION - Force cache reset on all devices
+export const APP_VERSION = "11";
 
 // Base path for GitHub Pages
-export const BASE_PATH = "/arazelectron2";
+export const BASE_PATH = "/arazelectron2/api";
 
-// Static data URLs (SSOT) - Always fetch from here, NEVER LocalStorage
+// Static data URLs (SSOT) - ALWAYS fetch from here
 export const STATIC_DATA_SOURCES = {
-  categories: `${BASE_PATH}/api/categories.json?v=${APP_VERSION}`,
-  products: `${BASE_PATH}/api/products.json?v=${APP_VERSION}`
+  categories: `${BASE_PATH}/categories.json?v=${APP_VERSION}`,
+  products: `${BASE_PATH}/products.json?v=${APP_VERSION}`
 };
