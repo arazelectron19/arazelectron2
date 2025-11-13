@@ -596,7 +596,7 @@ async def upload_image(file: UploadFile = File(...)):
             "message": "Şəkil uğurla yükləndi",
             "filename": unique_filename,
             "url": file_url,
-            "full_url": f"https://bu-github-update.preview.emergentagent.com{file_url}"
+            "full_url": f"https://araz-store.preview.emergentagent.com{file_url}"
         }
         
     except Exception as e:

@@ -1,0 +1,84 @@
+<analysis>
+The trajectory documents the development and debugging of the Araz Elektron e-commerce platform. The initial user request was to make changes to the GitHub site. I began by exploring the codebase, identifying a React frontend, a FastAPI backend, and a MongoDB database. I successfully installed dependencies and started the services.
+
+A significant portion of the work involved troubleshooting a persistent Save to GitHub failure (403 error). After numerous attempts involving support agent calls, Personal Access Tokens, and scope adjustments, the root cause was identified as a temporary restriction on the user's new GitHub account.
+
+While the GitHub issue was ongoing, work pivoted to feature development and bug fixing. Key tasks included:
+1.  **Category Deletion:** Fixed a bug where the frontend used a  instead of the backend. I refactored  to use  for real API calls.
+2.  **UI/UX Enhancements:** Implemented modals for category deletion/addition, improved error handling, and made the category list collapsible on mobile devices.
+3.  **Data Sync Issues:** Diagnosed and fixed several data synchronization problems, including a React error caused by incorrect data types in a dropdown and a critical issue where the Admin Panel and HomePage were using different data sources (localStorage vs. backend API). I aligned both to use the backend.
+4.  **Architectural Pivots:** The data strategy shifted multiple times to solve deployment and sync issues, moving from a backend-dependent model to a fully static one (reading from JSON files), and then back towards a dynamic model.
+
+The most recent and critical pivot was the decision to integrate **Firebase/Firestore** as a single source of truth to resolve persistent data inconsistencies across different devices and environments (Emergent preview vs. GitHub Pages). The last action was creating the Firebase config and starting the backend migration.
+</analysis>
+
+<product_requirements>
+The goal is to build and maintain the Araz Elektron e-commerce platform. The platform consists of a public-facing storefront and a password-protected admin panel ().
+
+**Core Features Implemented:**
+*   **Storefront:** Displays product listings, categories, and a search function.
+*   **Admin Panel:** Allows for CRUD (Create, Read, Update, Delete) operations on products and categories.
+*   **Data Handling:** The application's data source has undergone several iterations. It started with a FastAPI/MongoDB backend, briefly switched to a fully static model using local JSON files, and is now being migrated to use Google Firestore as the single source of truth to ensure data consistency across all platforms (development preview, GitHub Pages, Cloudflare Pages).
+*   **UI/UX:** Several improvements were made, including adding confirmation modals for destructive actions (like deleting categories), enhancing error message displays, and implementing a responsive, collapsible category menu for mobile devices.
+
+**Deployment:**
+The application is intended for deployment on GitHub Pages, with the production build located in the  directory of the  repository. A major recurring issue has been the inability to push changes to GitHub due to a new account restriction, which has driven many of the architectural decisions.
+</product_requirements>
+
+<key_technical_concepts>
+- **Full-Stack Architecture:** React (with Craco) frontend, FastAPI (Python) backend.
+- **Database:** Initially MongoDB, currently migrating to Google Firestore as the primary data store.
+- **API Communication:** Frontend uses  to communicate with the backend. API routes are prefixed with .
+- **UI/UX:** Tailwind CSS and shadcn/ui for styling. Implemented custom modals and responsive design patterns.
+- **Deployment:** GitHub Pages from the  directory.
+- **Build Process:** yarn run v1.22.22
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command. (using ) to create an optimized production build.
+- **Data Persistence Strategy:** Shifted from Mock API -> MongoDB -> Static JSON -> **Firestore**.
+</key_technical_concepts>
+
+<code_architecture>
+The project is a standard monorepo with separate directories for the frontend and backend.
+
+**Directory Structure:**
+
+
+**Key File Summaries & Changes:**
+
+-   ****
+    -   **Importance:** This file contains all logic for the admin interface, including adding, editing, and deleting products and categories. It's the primary point of data manipulation.
+    -   **Changes:** This file was heavily modified. It was refactored from using a local  to making live API calls to the backend via . Modals for adding and deleting categories, along with their associated state management and error handling, were added. It was also updated to use  consistently for product-category linkage.
+
+-   ****
+    -   **Importance:** This is the main customer-facing component, responsible for displaying products and the category sidebar.
+    -   **Changes:** It was updated to fetch data from the live backend API instead of the mock API to ensure consistency with the Admin Panel. Logic was added to filter out empty categories and to make the category list collapsible on mobile devices using responsive Tailwind CSS classes.
+
+-   ****
+    -   **Importance:** This file defines all backend API endpoints for interacting with the database.
+    -   **Changes:** Endpoints for category deletion were improved to check for associated products before deleting. New endpoints were added for data cleanup and migration tasks, such as  to reassign products from deleted categories. The last requested change was to begin rewriting these endpoints to use Firestore instead of MongoDB.
+
+-   ****
+    -   **Importance:** This new file initializes the Firebase connection for the frontend. It is the first step in the migration to Firestore as the application's database.
+    -   **Changes:** The file was created with the user-provided Firebase configuration.
+      
+</code_architecture>
+
+<pending_tasks>
+-   **Complete Firestore Migration:** The backend API endpoints for categories (, , ) need to be fully rewritten to use the Firebase Admin SDK to interact with the Firestore database, as requested in the final user messages.
+-   **Migrate Product Endpoints:** After categories, the product CRUD endpoints in  also need to be migrated from MongoDB to Firestore.
+-   **Frontend Firestore Integration:** The frontend data fetching logic in  and  may need to be updated to align with the new Firestore-based backend structure if the API contracts change.
+</pending_tasks>
+
+<current_work>
+Immediately before this summary request, the project was undergoing a major architectural shift to resolve persistent data synchronization issues across different devices and deployment environments. The decision was made to migrate the entire data layer from the existing FastAPI/MongoDB backend to **Google Firestore**, making it the single source of truth.
+
+The last sequence of actions was:
+1.  **User Request:** The user explicitly requested to add Firebase to the project and replace the existing backend logic with Firestore operations.
+2.  **Firebase Installation (Frontend):** The user provided Firebase configuration details. I created the file  to initialize the Firebase app for the frontend.
+3.  **Firebase Installation (Backend):** I installed the  Python package to enable backend communication with Firestore.
+4.  **Next User Request:** The user then instructed me to change the backend APIs by removing the Emergent server (implying the MongoDB logic) and rewriting all category operations (GET, POST, DELETE) to use Firestore.
+5.  **Final Task:** The last action was a user request to remove the Local Mode banner and ensure all data is read from Firestore, solidifying the move away from  and towards a unified, cloud-based data source. The work was paused just before implementing the backend Firestore logic.
+</current_work>
+
+<optional_next_step>
+I will now start modifying the  file to replace the MongoDB-based category endpoints with Firestore operations, as per your last request.
+</optional_next_step>

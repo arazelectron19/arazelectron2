@@ -10,7 +10,7 @@ import sys
 from typing import Dict, List, Optional
 
 # Backend URL from environment
-BACKEND_URL = "https://bu-github-update.preview.emergentagent.com/api"
+BACKEND_URL = "https://araz-store.preview.emergentagent.com/api"
 
 class CategoryTester:
     def __init__(self):
