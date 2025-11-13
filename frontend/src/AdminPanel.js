@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { mockAPI, initializeStorage } from "./mockAPI";
-import axios from "axios";
+import { mockAPI } from "./mockAPI";
+import { firestoreService } from "./firestoreService";
 import { APP_VERSION, hardRefreshIfNeeded } from "./version";
-import { USE_REMOTE_API } from "./config";
 
-const API = process.env.REACT_APP_BACKEND_URL || '';
-
-// Admin Panel - v3.0 - Fully static mode support
+// Admin Panel - Firestore Mode
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
