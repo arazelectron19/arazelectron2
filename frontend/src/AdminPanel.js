@@ -48,50 +48,12 @@ const AdminPanel = () => {
       // Check version and hard reload if needed
       await hardRefreshIfNeeded();
       
-      // Initialize storage
-      initializeStorage();
-      
-      // Run orphan cleanup first (if backend available)
-      if (API) {
-        try {
-          await axios.post(`${API}/api/categories/cleanup-orphans`);
-        } catch (err) {
-          console.warn('Cleanup failed:', err.message);
-        }
-      }
-      
-      // Load categories (always needed)
-      let categoriesData;
-      if (USE_REMOTE_API && API) {
-        try {
-          // Try to load from backend with full details
-          const response = await axios.get(`${API}/api/categories/all`);
-          categoriesData = { categories: response.data }; // Array of {id, name} objects
-        } catch (backendError) {
-          console.warn('Backend categories failed, using mockAPI:', backendError.message);
-          categoriesData = await mockAPI.getCategories();
-        }
-      } else {
-        // Static mode
-        categoriesData = await mockAPI.getCategories();
-      }
-      
-      setCategories(categoriesData.categories || []);
+      // Load from Firestore
+      const categoriesData = await firestoreService.getCategories();
+      setCategories(categoriesData || []);
 
       if (activeTab === 'products') {
-        let productsData;
-        if (USE_REMOTE_API && API) {
-          try {
-            const response = await axios.get(`${API}/api/products`);
-            productsData = response.data || [];
-          } catch (err) {
-            console.warn('Backend products failed, using mockAPI:', err.message);
-            productsData = await mockAPI.getProducts();
-          }
-        } else {
-          // Static mode - use mockAPI
-          productsData = await mockAPI.getProducts();
-        }
+        const productsData = await firestoreService.getProducts();
         setProducts(productsData || []);
       } else if (activeTab === 'orders') {
         const ordersData = await mockAPI.getOrders();
@@ -100,10 +62,11 @@ const AdminPanel = () => {
         const contactData = await mockAPI.getContactInfo();
         setContactInfo(contactData ||{});
       } else if (activeTab === 'categories') {
-        setCategoriesList(categoriesData.categories || []);
+        setCategoriesList(categoriesData || []);
       }
     } catch (error) {
       console.error('Məlumat yükləmə xətası:', error);
+      alert('⚠️ Firestore bağlantı xətası! Firebase console-da security rules yoxlayın.');
     } finally {
       setLoading(false);
     }
