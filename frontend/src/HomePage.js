@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { hardRefreshIfNeeded } from "./version";
-import { dataService } from "./dataService";
+import { firestoreService } from "./firestoreService";
+import { mockAPI } from "./mockAPI";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
