@@ -23,7 +23,7 @@ const AdminPanel = () => {
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [addCategoryError, setAddCategoryError] = useState(null);
   const [addCategorySuccess, setAddCategorySuccess] = useState(false);
-  const showBackendWarning = false; // Static site - no backend warning needed
+  // Removed backend warning - using Firestore directly
 
   // Form state
   const [formData, setFormData] = useState({
