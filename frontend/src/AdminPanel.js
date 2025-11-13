@@ -311,31 +311,8 @@ const AdminPanel = () => {
     setCategoryDeleteSuccess(false);
 
     try {
-      // Try backend API first
-      if (API && categoryToDelete.id) {
-        const response = await axios.delete(`${API}/api/categories/${categoryToDelete.id}`);
-        if (response.data && response.data.message) {
-          // Clear localStorage cache
-          localStorage.removeItem('araz_categories');
-          localStorage.removeItem('araz_products');
-          
-          setCategoryDeleteSuccess(true);
-          setTimeout(() => {
-            setShowDeleteCategoryConfirm(false);
-            setCategoryToDelete(null);
-            setCategoryDeleteSuccess(false);
-            loadData(); // Reload categories
-          }, 1500);
-          return;
-        }
-      }
-      
-      // Fallback to mockAPI if no backend or no categoryId
-      await mockAPI.deleteCategory(categoryToDelete.name);
-      
-      // Clear localStorage cache
-      localStorage.removeItem('araz_categories');
-      localStorage.removeItem('araz_products');
+      // Use Firestore
+      await firestoreService.deleteCategory(categoryToDelete.id);
       
       setCategoryDeleteSuccess(true);
       setTimeout(() => {
@@ -347,20 +324,10 @@ const AdminPanel = () => {
     } catch (error) {
       console.error('Kateqoriya silmə xətası:', error);
       
-      // Handle specific error messages from backend
-      if (error.response && error.response.data && error.response.data.detail) {
-        const errorMessage = error.response.data.detail;
-        
-        // Check if it's a "has products" error
-        if (errorMessage.includes('məhsul var') || errorMessage.includes('products')) {
-          setCategoryDeleteError(errorMessage);
-        } else if (errorMessage.includes('tapılmadı') || error.response.status === 404) {
-          setCategoryDeleteError('Kateqoriya tapılmadı!');
-        } else {
-          setCategoryDeleteError(errorMessage);
-        }
+      if (error.message.includes('products')) {
+        setCategoryDeleteError('Bu kateqoriyada məhsul var! Əvvəlcə məhsulları silin.');
       } else {
-        setCategoryDeleteError('Kateqoriya silmə zamanı xəta baş verdi!');
+        setCategoryDeleteError('Kateqoriya silmə zamanı xəta baş verdi: ' + error.message);
       }
     }
   };
