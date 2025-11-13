@@ -1,14 +1,14 @@
-// FULLY STATIC MODE - No Emergent server, GitHub Pages only
-export const USE_REMOTE_API = false;
+// REMOTE API MODE - Cloudflare Pages Functions
+export const USE_REMOTE_API = true;
 
-// APP_VERSION - Versioned file names (not query params)
+// APP_VERSION
 export const APP_VERSION = "14";
 
-// Base path for GitHub Pages
-export const BASE_PATH = "/arazelectron2/api";
+// Base path for API (Cloudflare Functions)
+export const API_BASE = "/api";
 
-// Static data URLs - VERSIONED FILE NAMES
+// Static data fallback
 export const STATIC_DATA_SOURCES = {
-  categories: `${BASE_PATH}/categories.v${APP_VERSION}.json`,
-  products: `${BASE_PATH}/products.v${APP_VERSION}.json`
+  categories: `/api/categories.v${APP_VERSION}.json`,
+  products: `/api/products.v${APP_VERSION}.json`
 };
