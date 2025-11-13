@@ -259,26 +259,9 @@ const AdminPanel = () => {
     setAddCategorySuccess(false);
 
     try {
-      // Try backend API first
-      if (API) {
-        const response = await axios.post(`${API}/api/categories`, {
-          name: categoryName.trim()
-        });
-        
-        if (response.data) {
-          setAddCategorySuccess(true);
-          setShowAddCategoryModal(true);
-          setTimeout(() => {
-            setShowAddCategoryModal(false);
-            setAddCategorySuccess(false);
-            loadData(); // Reload categories
-          }, 1500);
-          return;
-        }
-      }
+      // Use Firestore
+      await firestoreService.addCategory(categoryName.trim());
       
-      // Fallback to mockAPI
-      await mockAPI.createCategory(categoryName.trim());
       setAddCategorySuccess(true);
       setShowAddCategoryModal(true);
       setTimeout(() => {
@@ -288,12 +271,7 @@ const AdminPanel = () => {
       }, 1500);
     } catch (error) {
       console.error('Kateqoriya əlavə etmə xətası:', error);
-      
-      if (error.response && error.response.data && error.response.data.detail) {
-        setAddCategoryError(error.response.data.detail);
-      } else {
-        setAddCategoryError('Kateqoriya əlavə etmə zamanı xəta baş verdi!');
-      }
+      setAddCategoryError('Kateqoriya əlavə etmə zamanı xəta baş verdi: ' + error.message);
       setShowAddCategoryModal(true);
     }
   };
