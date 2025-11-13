@@ -1,12 +1,16 @@
-// BACKEND API MODE - Cloudflare Pages or Current Server
+// BACKEND MODE - All devices see same data
 export const USE_REMOTE_API = true;
 
-// APP_VERSION
-export const APP_VERSION = "15";
+// APP_VERSION - Clear localStorage on version change
+export const APP_VERSION = "16";
 
-// API endpoints (relative URLs for same-origin)
+// API endpoints (relative URLs)
 export const API_ENDPOINTS = {
-  products: '/api/products',
   categories: '/api/categories',
+  products: '/api/products',
+  categoriesAll: '/api/categories/all',
   orders: '/api/orders'
 };
+
+// Backend URL from environment or relative
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
