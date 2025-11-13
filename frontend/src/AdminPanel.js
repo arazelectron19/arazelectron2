@@ -193,33 +193,22 @@ const AdminPanel = () => {
     setShowDeleteConfirm(false);
     
     try {
-      // Try backend API first
-      if (USE_REMOTE_API && API) {
-        await axios.delete(`${API}/api/products/${productToDelete}`);
-      } else {
-        // Static mode
-        await mockAPI.deleteProduct(productToDelete);
-      }
+      // Use Firestore
+      await firestoreService.deleteProduct(productToDelete);
       
-      // Uğurlu mesaj göstər
       alert('✅ Məhsul uğurla silindi!');
-      
-      // Clear cache
-      localStorage.removeItem('araz_categories');
-      localStorage.removeItem('araz_products');
       
       // Məlumatları yenilə
       await loadData();
       
       // Ana səhifəyə məlumat ver
-      localStorage.setItem('products-updated', Date.now().toString());
       window.dispatchEvent(new CustomEvent('products-updated'));
       
       console.log('Məhsul silindi və məlumatlar yeniləndi');
       
     } catch (error) {
       console.error('❌ Silmə xətası:', error);
-      alert('❌ Xəta: Silmə zamanı xəta baş verdi!');
+      alert('❌ Xəta: ' + error.message);
     } finally {
       setLoading(false);
       setProductToDelete(null);
