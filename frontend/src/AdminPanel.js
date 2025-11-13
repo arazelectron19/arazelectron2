@@ -101,48 +101,35 @@ const AdminPanel = () => {
         : null;
       
       const productData = {
-        ...formData,
-        categoryId: categoryId, // Store ID
-        category: formData.category, // Keep name for backward compatibility
+        name: formData.name,
+        description: formData.description,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock) || 100,
-        images: formData.image_urls.filter(url => url.trim())
+        categoryId: categoryId,
+        category: formData.category,
+        image_urls: formData.image_urls.filter(url => url.trim()),
+        is_featured: formData.is_featured || false,
+        specifications: formData.specifications || ''
       };
 
-      // Try backend API first
-      if (USE_REMOTE_API && API) {
-        if (editingProduct) {
-          await axios.put(`${API}/api/products/${editingProduct.id}`, productData);
-          alert('✅ Məhsul güncəlləndi!');
-        } else {
-          await axios.post(`${API}/api/products`, productData);
-          alert('✅ Məhsul əlavə edildi!');
-        }
+      // Use Firestore directly
+      if (editingProduct) {
+        await firestoreService.updateProduct(editingProduct.id, productData);
+        alert('✅ Məhsul güncəlləndi!');
       } else {
-        // Static mode - use mockAPI (localStorage)
-        if (editingProduct) {
-          await mockAPI.updateProduct(editingProduct.id, productData);
-          alert('✅ Məhsul güncəlləndi!');
-        } else {
-          await mockAPI.createProduct(productData);
-          alert('✅ Məhsul əlavə edildi!');
-        }
+        await firestoreService.addProduct(productData);
+        alert('✅ Məhsul əlavə edildi!');
       }
-
-      // Clear localStorage to force refresh
-      localStorage.removeItem('araz_categories');
-      localStorage.removeItem('araz_products');
       
       resetForm();
       loadData();
       
       // Ana səhifəyə məlumat ver ki, məhsulları yeniləsin
-      localStorage.setItem('products-updated', Date.now().toString());
       window.dispatchEvent(new CustomEvent('products-updated'));
       
     } catch (error) {
       console.error('Məhsul əməliyyat xətası:', error);
-      alert('❌ Xəta baş verdi!');
+      alert('❌ Xəta baş verdi: ' + error.message);
     }
   };
 
