@@ -1,14 +1,1 @@
-[
-  {
-    "id": "cat-1",
-    "name": "Kamera"
-  },
-  {
-    "id": "cat-2",
-    "name": "Smartfon"
-  },
-  {
-    "id": "cat-3",
-    "name": "Kompüter"
-  }
-]
+[{"id":"a47d95f5-b1f4-42da-a616-fb0f07f1a2f2","name":"Kamera"},{"id":"96ddae85-82a5-4c33-bfcb-56b7a6f880b2","name":"Uncategorized"},{"id":"a70d0159-f406-4bfe-99a0-1afea0e42ce8","name":"DVR"},{"id":"d0d83dc2-6884-4e41-86c2-0785c9de23bc","name":"cfv"},{"id":"ef857383-387e-42c2-b927-871111a5ccd3","name":"ad"},{"id":"9392fbb9-9949-4b73-a3d1-289d3c0b05e7","name":"dvr"},{"id":"b9c92ef1-9be3-49c7-9535-54ebd3fb0f88","name":"f\\"},{"id":"b16df1b9-467a-41a9-8488-d1f312ac2d48","name":"f"},{"id":"85d202d5-4292-487f-9bfc-6a8b6c73a70e","name":",jbk"},{"id":"9f8fe9c3-d5a9-4c7b-b483-d7401ce6583e","name":",."},{"id":"60795097-e8f6-42d1-9eaa-20f1cf9ee44b","name":"m"},{"id":"e731900d-4f6e-41a1-9a23-0a408648be81","name":"kl"},{"id":"cfc84db6-8608-4b03-b213-aa0e15342875","name":"ç"},{"id":"5fd12da7-5cfb-4d2e-806f-a1f12e015335","name":"jh"},{"id":"ba415f4c-2179-42af-a65b-2cd60e791aae","name":",m"},{"id":"8c71550f-ae46-41d6-9347-ba19685a08d1","name":"l;"},{"id":"253b6e93-3e6e-447c-bcfe-3fc62a8297c7","name":"io"},{"id":"bc6b3a31-8f84-48ed-89cd-cc1508fa9f1e","name":"j"},{"id":"f4fce282-2e91-4057-b91b-5f361ac58d48","name":","}]
