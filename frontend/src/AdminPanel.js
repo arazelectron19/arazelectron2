@@ -239,7 +239,6 @@ const AdminPanel = () => {
       alert('✅ Əlaqə məlumatları güncəlləndi!');
       
       // Ana səhifəyə məlumat ver ki, əlaqə məlumatlarını yeniləsin
-      localStorage.setItem('contact-updated', Date.now().toString());
       window.dispatchEvent(new CustomEvent('contact-updated'));
       
     } catch (error) {
