@@ -452,11 +452,6 @@ const AdminPanel = () => {
               />
               <h1 className="text-2xl font-bold text-orange-600">
                 Araz Elektron - Admin Panel
-                {!USE_REMOTE_API && (
-                  <span className="ml-3 text-sm font-normal text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                    📦 Local Mode
-                  </span>
-                )}
               </h1>
             </div>
             <a href="/" className="text-orange-600 hover:text-orange-700">
