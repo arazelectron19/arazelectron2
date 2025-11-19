@@ -827,10 +827,14 @@ const AdminPanel = () => {
 
         {/* Orders Tab */}
         {activeTab === 'orders' && !loading && (
-          <OrdersTab orders={orders} onUpdateStatus={async (id, status) => {
-            await firestoreService.updateOrderStatus(id, status);
-            loadData();
-          }} />
+          <OrdersTab 
+            orders={orders} 
+            setOrders={setOrders}
+            onUpdateStatus={async (id, status) => {
+              await firestoreService.updateOrderStatus(id, status);
+              loadData();
+            }} 
+          />
         )}
 
         {activeTab === 'orders_old' && !loading && (
