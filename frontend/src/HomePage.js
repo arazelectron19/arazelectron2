@@ -143,7 +143,14 @@ const HomePage = () => {
       <header className="bg-orange-600 shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.reload();
+              }}
+            >
               <img 
                 src={logo} 
                 alt="Araz Elektron Logo"
