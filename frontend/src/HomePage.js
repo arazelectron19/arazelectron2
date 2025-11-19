@@ -143,7 +143,7 @@ const HomePage = () => {
       <header className="bg-orange-600 shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
               <img 
                 src={logo} 
                 alt="Araz Elektron Logo"
@@ -153,7 +153,7 @@ const HomePage = () => {
                 <h1 className="text-2xl font-bold text-white">Araz Elektron</h1>
                 <p className="text-sm text-orange-100">Keyfiyyətli elektron avadanlıqlar</p>
               </div>
-            </div>
+            </Link>
             
             {/* Cart Icon */}
             <CartIcon onClick={() => setIsCartOpen(true)} />
