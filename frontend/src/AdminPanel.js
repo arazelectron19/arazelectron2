@@ -1160,7 +1160,7 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate }) => {
 
 
 // Orders Tab Component - Firestore Orders
-const OrdersTab = ({ orders, onUpdateStatus }) => {
+const OrdersTab = ({ orders, setOrders, onUpdateStatus }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const getStatusColor = (status) => {
