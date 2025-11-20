@@ -461,20 +461,20 @@ const HomePage = () => {
                   <div className="space-y-3">
                     <div className="text-gray-300">
                       <span className="font-semibold">Ünvan:</span>
-                      <div className="text-sm mt-1">Bakı şəhəri, 28 May küç.</div>
+                      <div className="text-sm mt-1">{generalInfo.address}</div>
                     </div>
                     <div className="text-gray-300">
                       <span className="font-semibold">İş saatları:</span>
-                      <div className="text-sm mt-1">09:00 – 20:00</div>
+                      <div className="text-sm mt-1">{generalInfo.workingHours}</div>
                     </div>
                     <div className="text-gray-300">
                       <span className="font-semibold">E-poçt:</span>
                       <div className="text-sm mt-1">
                         <a 
-                          href="mailto:info@arazelectron.az"
+                          href={`mailto:${generalInfo.email}`}
                           className="hover:text-purple-400 transition-colors"
                         >
-                          info@arazelectron.az
+                          {generalInfo.email}
                         </a>
                       </div>
                     </div>
