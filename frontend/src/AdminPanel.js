@@ -1238,7 +1238,7 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate, generalInfo, onGeneralIn
                 onGeneralInfoUpdate(generalInfoForm);
               }
             }}
-            className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold transition-colors"
+            className="w-full px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold transition-colors"
           >
             💾 Ümumi Məlumatı Yadda Saxla
           </button>
