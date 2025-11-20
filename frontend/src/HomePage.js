@@ -364,9 +364,9 @@ const HomePage = () => {
           </div>
           
           {contacts.length > 0 && (
-            <div className="max-w-6xl mx-auto">
-              {/* Desktop: 4 sütunlu grid, Tablet: 2x2, Mobile: alt-alta */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="max-w-6xl mx-auto space-y-6">
+              {/* 1-ci sıra: WhatsApp, Ustalar, Satış */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 {/* WhatsApp */}
                 {contacts.filter(c => c.category === 'whatsapp').length > 0 && (
@@ -445,8 +445,11 @@ const HomePage = () => {
                   </div>
                 )}
 
-                {/* Ümumi Məlumat - Yeni 4-cü Card */}
-                <div className="bg-gray-800 rounded-xl p-6">
+              </div>
+
+              {/* 2-ci sıra: Ümumi Məlumat (ortalanmış) */}
+              <div className="flex justify-center">
+                <div className="w-full md:w-1/3 bg-gray-800 rounded-xl p-6">
                   <h3 className="text-purple-400 font-bold text-lg mb-4 flex items-center gap-2">
                     ℹ️ Ümumi Məlumat
                   </h3>
@@ -472,8 +475,8 @@ const HomePage = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
+
             </div>
           )}
         </div>
