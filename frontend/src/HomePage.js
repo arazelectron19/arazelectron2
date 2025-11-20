@@ -170,21 +170,21 @@ const HomePage = () => {
 
       {/* Axtarış Paneli */}
       <div className="bg-white border-b border-gray-200 py-6">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <div className="w-full md:w-[60%] max-w-3xl">
-              <div className="flex flex-col md:flex-row gap-2 md:gap-2">
+        <div className="w-full px-2 md:px-4">
+          <div className="flex justify-center items-center">
+            <div className="w-full max-w-[95%] md:max-w-3xl md:w-[60%]">
+              <div className="flex flex-row gap-2 justify-center items-center">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Məhsul axtar..."
-                  className="w-full flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900"
+                  className="flex-1 px-3 md:px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900"
                   data-testid="search-input"
                 />
                 <button
                   onClick={() => {}}
-                  className="w-full md:w-auto px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2"
+                  className="px-4 md:px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
                   data-testid="search-button"
                 >
                   🔍 Axtar
