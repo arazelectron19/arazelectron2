@@ -947,7 +947,7 @@ const AdminPanel = () => {
 // Contact Info Tab Component - Simplified for Firestore
 // Contact Info Tab Component - Simplified for Firestore
 // Contact Info Tab Component - Dynamic Contacts Management
-const ContactInfoTab = ({ contactInfo, onContactUpdate }) => {
+const ContactInfoTab = ({ contactInfo, onContactUpdate, generalInfo, onGeneralInfoUpdate }) => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -957,6 +957,17 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate }) => {
     name: '',
     phone: ''
   });
+  const [generalInfoForm, setGeneralInfoForm] = useState({
+    address: '',
+    workingHours: '',
+    email: ''
+  });
+
+  useEffect(() => {
+    if (generalInfo) {
+      setGeneralInfoForm(generalInfo);
+    }
+  }, [generalInfo]);
 
   useEffect(() => {
     loadContacts();
