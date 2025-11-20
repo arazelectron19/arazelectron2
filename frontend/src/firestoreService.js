@@ -349,5 +349,53 @@ export const firestoreService = {
       console.error('Error deleting order:', error);
       throw error;
     }
+  },
+
+  // Settings / Contact Info
+  /**
+   * Get general info settings
+   */
+  async getGeneralInfo() {
+    try {
+      const docRef = doc(db, 'settings', 'generalInfo');
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        // Default values
+        return {
+          address: 'Bakı şəhəri, 28 May küç.',
+          workingHours: '09:00 – 20:00',
+          email: 'info@arazelectron.az'
+        };
+      }
+    } catch (error) {
+      console.error('Error getting general info:', error);
+      return {
+        address: 'Bakı şəhəri, 28 May küç.',
+        workingHours: '09:00 – 20:00',
+        email: 'info@arazelectron.az'
+      };
+    }
+  },
+
+  /**
+   * Update general info settings
+   */
+  async updateGeneralInfo(data) {
+    try {
+      const docRef = doc(db, 'settings', 'generalInfo');
+      await setDoc(docRef, {
+        address: data.address,
+        workingHours: data.workingHours,
+        email: data.email,
+        updatedAt: new Date().toISOString()
+      });
+      return true;
+    } catch (error) {
+      console.error('Error updating general info:', error);
+      throw error;
+    }
   }
 };
