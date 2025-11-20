@@ -365,8 +365,8 @@ const HomePage = () => {
           
           {contacts.length > 0 && (
             <div className="max-w-6xl mx-auto">
-              {/* Desktop: 3 sütunlu grid, Mobile: alt-alta */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Desktop: 4 sütunlu grid, Tablet: 2x2, Mobile: alt-alta */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 {/* WhatsApp */}
                 {contacts.filter(c => c.category === 'whatsapp').length > 0 && (
@@ -444,6 +444,34 @@ const HomePage = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Ümumi Məlumat - Yeni 4-cü Card */}
+                <div className="bg-gray-800 rounded-xl p-6">
+                  <h3 className="text-purple-400 font-bold text-lg mb-4 flex items-center gap-2">
+                    ℹ️ Ümumi Məlumat
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="text-gray-300">
+                      <span className="font-semibold">Ünvan:</span>
+                      <div className="text-sm mt-1">Bakı şəhəri, 28 May küç.</div>
+                    </div>
+                    <div className="text-gray-300">
+                      <span className="font-semibold">İş saatları:</span>
+                      <div className="text-sm mt-1">09:00 – 20:00</div>
+                    </div>
+                    <div className="text-gray-300">
+                      <span className="font-semibold">E-poçt:</span>
+                      <div className="text-sm mt-1">
+                        <a 
+                          href="mailto:info@arazelectron.az"
+                          className="hover:text-purple-400 transition-colors"
+                        >
+                          info@arazelectron.az
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
