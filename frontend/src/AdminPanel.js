@@ -79,6 +79,8 @@ const AdminPanel = () => {
       } else if (activeTab === 'contact') {
         const contactData = await firestoreService.getContactInfo();
         setContactInfo(contactData ||{});
+        const generalInfoData = await firestoreService.getGeneralInfo();
+        setGeneralInfo(generalInfoData);
       } else if (activeTab === 'categories') {
         setCategoriesList(categoriesData || []);
       }
