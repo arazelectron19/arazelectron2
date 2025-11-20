@@ -55,21 +55,24 @@ const HomePage = () => {
       }
       
       // Load directly from Firestore
-      const [productsData, categoriesData, contactsData] = await Promise.all([
+      const [productsData, categoriesData, contactsData, generalInfoData] = await Promise.all([
         firestoreService.getProducts(),
         firestoreService.getCategories(),
-        firestoreService.getContacts()
+        firestoreService.getContacts(),
+        firestoreService.getGeneralInfo()
       ]);
       
       console.log('✅ Loaded from Firestore:', {
         products: productsData.length,
         categories: categoriesData.length,
-        contacts: contactsData.length
+        contacts: contactsData.length,
+        generalInfo: generalInfoData
       });
       
       setProducts(productsData || []);
       setCategories(categoriesData || []);
       setContacts(contactsData || []);
+      setGeneralInfo(generalInfoData);
       
     } catch (error) {
       console.error('❌ Firestore load error:', error);
