@@ -917,6 +917,17 @@ const AdminPanel = () => {
           <ContactInfoTab 
             contactInfo={contactInfo}
             onContactUpdate={handleContactUpdate}
+            generalInfo={generalInfo}
+            onGeneralInfoUpdate={async (data) => {
+              try {
+                await firestoreService.updateGeneralInfo(data);
+                setGeneralInfo(data);
+                alert('✅ Ümumi məlumat yeniləndi!');
+              } catch (error) {
+                console.error('Update error:', error);
+                alert('❌ Xəta baş verdi!');
+              }
+            }}
           />
         )}
 
