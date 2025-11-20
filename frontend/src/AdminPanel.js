@@ -13,6 +13,11 @@ const AdminPanel = () => {
   const [orders, setOrders] = useState([]);
   const [contactInfo, setContactInfo] = useState(null);
   const [categoriesList, setCategoriesList] = useState([]);
+  const [generalInfo, setGeneralInfo] = useState({
+    address: '',
+    workingHours: '',
+    email: ''
+  });
   const [activeTab, setActiveTab] = useState('products');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
