@@ -13,6 +13,11 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [contactInfo, setContactInfo] = useState(null);
   const [contacts, setContacts] = useState([]);
+  const [generalInfo, setGeneralInfo] = useState({
+    address: 'Bakı şəhəri, 28 May küç.',
+    workingHours: '09:00 – 20:00',
+    email: 'info@arazelectron.az'
+  });
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
