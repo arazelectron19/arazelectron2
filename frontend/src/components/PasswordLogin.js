@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
-const ADMIN_PASSWORD = 'araz1979';
+const ADMIN_PASSWORD = 'arazelectron2006';
 
 const PasswordLogin = () => {
   const [password, setPassword] = useState('');
