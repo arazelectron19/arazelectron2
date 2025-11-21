@@ -15,6 +15,7 @@ const HomePage = () => {
   const [contacts, setContacts] = useState([]);
   const [generalInfo, setGeneralInfo] = useState({
     address: 'Bakı şəhəri, 28 May küç.',
+    addressLink: '',
     workingHours: '09:00 – 20:00',
     email: 'info@arazelectron.az'
   });
