@@ -1364,6 +1364,19 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate, generalInfo, onGeneralIn
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
+              Ünvan Linki (Google Maps və ya digər)
+            </label>
+            <input
+              type="url"
+              value={generalInfoForm.addressLink || ''}
+              onChange={(e) => setGeneralInfoForm({...generalInfoForm, addressLink: e.target.value})}
+              placeholder="https://maps.app.goo.gl/xxxx"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               İş Saatları
             </label>
             <input
