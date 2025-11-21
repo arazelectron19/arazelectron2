@@ -124,14 +124,17 @@ const AdminPanel = () => {
       return;
     }
     
-    // Swap order values in local state only
-    const updatedProducts = [...displayedProducts];
-    const currentIndex = updatedProducts.findIndex(p => p.id === currentProduct.id);
-    const previousIndex = updatedProducts.findIndex(p => p.id === previousProduct.id);
-    
-    const tempOrder = updatedProducts[currentIndex].order || 999;
-    updatedProducts[currentIndex] = { ...updatedProducts[currentIndex], order: updatedProducts[previousIndex].order || 999 };
-    updatedProducts[previousIndex] = { ...updatedProducts[previousIndex], order: tempOrder };
+    // Create new array with swapped order values
+    const updatedProducts = displayedProducts.map(p => {
+      if (p.id === currentProduct.id) {
+        // Current product gets previous product's order
+        return { ...p, order: (previousProduct.order !== undefined ? previousProduct.order : 999) };
+      } else if (p.id === previousProduct.id) {
+        // Previous product gets current product's order
+        return { ...p, order: (currentProduct.order !== undefined ? currentProduct.order : 999) };
+      }
+      return p;
+    });
     
     setDisplayedProducts(updatedProducts);
     setHasUnsavedOrder(true);
@@ -148,14 +151,17 @@ const AdminPanel = () => {
       return;
     }
     
-    // Swap order values in local state only
-    const updatedProducts = [...displayedProducts];
-    const currentIndex = updatedProducts.findIndex(p => p.id === currentProduct.id);
-    const nextIndex = updatedProducts.findIndex(p => p.id === nextProduct.id);
-    
-    const tempOrder = updatedProducts[currentIndex].order || 999;
-    updatedProducts[currentIndex] = { ...updatedProducts[currentIndex], order: updatedProducts[nextIndex].order || 999 };
-    updatedProducts[nextIndex] = { ...updatedProducts[nextIndex], order: tempOrder };
+    // Create new array with swapped order values
+    const updatedProducts = displayedProducts.map(p => {
+      if (p.id === currentProduct.id) {
+        // Current product gets next product's order
+        return { ...p, order: (nextProduct.order !== undefined ? nextProduct.order : 999) };
+      } else if (p.id === nextProduct.id) {
+        // Next product gets current product's order
+        return { ...p, order: (currentProduct.order !== undefined ? currentProduct.order : 999) };
+      }
+      return p;
+    });
     
     setDisplayedProducts(updatedProducts);
     setHasUnsavedOrder(true);
