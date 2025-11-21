@@ -457,7 +457,16 @@ const HomePage = () => {
                   <div className="space-y-3">
                     <div className="text-gray-300">
                       <span className="font-semibold">Ünvan:</span>
-                      <div className="text-sm mt-1">{generalInfo.address}</div>
+                      <div className="text-sm mt-1">
+                        <a 
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(generalInfo.address)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-purple-400 transition-colors underline"
+                        >
+                          {generalInfo.address}
+                        </a>
+                      </div>
                     </div>
                     <div className="text-gray-300">
                       <span className="font-semibold">İş saatları:</span>
