@@ -391,6 +391,7 @@ export const firestoreService = {
       const docRef = doc(db, 'settings', 'generalInfo');
       await setDoc(docRef, {
         address: data.address,
+        addressLink: data.addressLink || '',
         workingHours: data.workingHours,
         email: data.email,
         updatedAt: new Date().toISOString()
