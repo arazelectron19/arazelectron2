@@ -9,6 +9,8 @@ import PasswordLogin from "./components/PasswordLogin";
 const AdminPanel = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [products, setProducts] = useState([]);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const [hasUnsavedOrder, setHasUnsavedOrder] = useState(false);
   const [categories, setCategories] = useState([]);
   const [orders, setOrders] = useState([]);
   const [contactInfo, setContactInfo] = useState(null);
