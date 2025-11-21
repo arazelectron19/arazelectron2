@@ -131,6 +131,7 @@ const AdminPanel = () => {
         category: formData.category,
         image_urls: formData.image_urls.filter(url => url.trim()),
         is_featured: formData.is_featured || false,
+        visibleInAll: formData.visibleInAll !== false,
         specifications: formData.specifications || ''
       };
 
