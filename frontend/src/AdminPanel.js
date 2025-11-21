@@ -867,6 +867,29 @@ const AdminPanel = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">
                         {product.price.toFixed(2)} ₼
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleMoveProductUp(index, sortedProducts)}
+                            disabled={index === 0 || (index > 0 && sortedProducts[index - 1].category !== product.category)}
+                            className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-xs"
+                            title="Yuxarı"
+                          >
+                            ↑
+                          </button>
+                          <span className="text-sm text-gray-600">
+                            {product.order || 999}
+                          </span>
+                          <button
+                            onClick={() => handleMoveProductDown(index, sortedProducts)}
+                            disabled={index === sortedProducts.length - 1 || (index < sortedProducts.length - 1 && sortedProducts[index + 1].category !== product.category)}
+                            className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-xs"
+                            title="Aşağı"
+                          >
+                            ↓
+                          </button>
+                        </div>
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                         <button
                           onClick={() => handleEdit(product)}
