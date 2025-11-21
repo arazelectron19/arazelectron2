@@ -815,11 +815,25 @@ const AdminPanel = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Məhsul</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kateqoriya</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Qiymət</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sıra</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Əməliyyatlar</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {products.map(product => (
+                  {(() => {
+                    // Sort products: first by category, then by order
+                    const sortedProducts = [...products].sort((a, b) => {
+                      // Compare categories first
+                      if (a.category !== b.category) {
+                        return a.category.localeCompare(b.category);
+                      }
+                      // Then compare by order within same category
+                      const orderA = a.order !== undefined ? a.order : 999;
+                      const orderB = b.order !== undefined ? b.order : 999;
+                      return orderA - orderB;
+                    });
+                    
+                    return sortedProducts.map((product, index) => (
                     <tr key={product.id} data-testid={`product-row-${product.id}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <img
