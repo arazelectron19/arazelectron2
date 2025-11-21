@@ -211,6 +211,14 @@ const CartDrawer = ({ isOpen, onClose }) => {
           </div>
         </div>
       )}
+
+      {/* Order Success Modal */}
+      <OrderSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        orderCode={successOrderData.code}
+        phone={successOrderData.phone}
+      />
     </>
   );
 };
