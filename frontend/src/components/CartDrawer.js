@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { firestoreService } from '../firestoreService';
+import OrderSuccessModal from './OrderSuccessModal';
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const { cart, removeFromCart, updateQuantity, clearCart, getTotal } = useCart();
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successOrderData, setSuccessOrderData] = useState({ code: '', phone: '' });
   const [phone, setPhone] = useState('');
   const [orderCode, setOrderCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
