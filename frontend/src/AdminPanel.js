@@ -1115,6 +1115,7 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate, generalInfo, onGeneralIn
   });
   const [generalInfoForm, setGeneralInfoForm] = useState({
     address: '',
+    addressLink: '',
     workingHours: '',
     email: ''
   });
