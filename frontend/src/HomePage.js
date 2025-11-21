@@ -89,11 +89,16 @@ const HomePage = () => {
     
     // Kateqoriya filteri
     if (selectedCategory !== 'all') {
-      // Kateqoriya seçilibsə, visibleInAll-dan asılı olmayaraq hamısını göstər
+      // Kateqoriya seçilibsə, həmin kateqoriyanın bütün məhsullarını göstər
       filtered = filtered.filter(p => p.category === selectedCategory);
     } else {
-      // "Hamısı" seçilibsə, yalnız visibleInAll=true olanları göstər
-      filtered = filtered.filter(p => p.visibleInAll !== false);
+      // "Hamısı" seçilibsə, yalnız includeInAllProducts=true olan kateqoriyaların məhsullarını göstər
+      filtered = filtered.filter(p => {
+        // Məhsulun kateqoriyasını tap
+        const productCategory = categories.find(cat => cat.name === p.category);
+        // Kateqoriya tapılmazsa və ya includeInAllProducts !== false isə göstər
+        return !productCategory || productCategory.includeInAllProducts !== false;
+      });
     }
     
     // Axtarış filteri (ad və kateqoriyaya görə)
