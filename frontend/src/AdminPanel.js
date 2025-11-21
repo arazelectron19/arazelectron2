@@ -855,8 +855,8 @@ const AdminPanel = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {(() => {
-                    // Sort products: first by category, then by order
-                    const sortedProducts = [...products].sort((a, b) => {
+                    // Sort displayedProducts: first by category, then by order
+                    const sortedProducts = [...displayedProducts].sort((a, b) => {
                       // Compare categories first
                       if (a.category !== b.category) {
                         return a.category.localeCompare(b.category);
