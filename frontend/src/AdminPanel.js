@@ -76,6 +76,8 @@ const AdminPanel = () => {
       if (activeTab === 'products') {
         const productsData = await firestoreService.getProducts();
         setProducts(productsData || []);
+        setDisplayedProducts(productsData || []);
+        setHasUnsavedOrder(false);
       } else if (activeTab === 'orders') {
         const ordersData = await firestoreService.getOrders();
         setOrders(ordersData || []);
