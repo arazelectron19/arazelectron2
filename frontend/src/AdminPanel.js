@@ -165,6 +165,7 @@ const AdminPanel = () => {
       image_urls: product.image_urls && product.image_urls.length > 0 ? product.image_urls : [product.image_url || ''],
       stock: '100',  // Default value
       is_featured: product.is_featured,
+      visibleInAll: product.visibleInAll !== false,
       specifications: product.specifications || ''
     });
     setEditingProduct(product);
