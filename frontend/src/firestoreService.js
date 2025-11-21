@@ -32,9 +32,10 @@ export const firestoreService = {
     try {
       const docRef = await addDoc(collection(db, 'categories'), {
         name,
+        includeInAllProducts: true,
         createdAt: new Date().toISOString()
       });
-      return { id: docRef.id, name };
+      return { id: docRef.id, name, includeInAllProducts: true };
     } catch (error) {
       console.error('Error adding category:', error);
       throw error;
