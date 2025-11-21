@@ -509,7 +509,7 @@ const AdminPanel = () => {
             }`}
             data-testid="products-tab"
           >
-            Məhsullar ({products.length})
+            Məhsullar
           </button>
           <button
             onClick={() => setActiveTab('orders')}
@@ -520,7 +520,7 @@ const AdminPanel = () => {
             }`}
             data-testid="orders-tab"
           >
-            Sifarişlər ({orders.length})
+            Sifarişlər
           </button>
           <button
             onClick={() => setActiveTab('contact')}
@@ -542,7 +542,7 @@ const AdminPanel = () => {
             }`}
             data-testid="categories-tab"
           >
-            Kateqoriyalar ({categoriesList.length})
+            Kateqoriyalar
           </button>
         </div>
 
