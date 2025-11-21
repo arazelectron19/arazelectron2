@@ -113,55 +113,74 @@ const AdminPanel = () => {
     setShowAddForm(false);
   };
 
-  const handleMoveProductUp = async (productIndex, sortedProducts) => {
+  const handleMoveProductUp = (productIndex, sortedProducts) => {
     if (productIndex === 0) return;
     
-    try {
-      const currentProduct = sortedProducts[productIndex];
-      const previousProduct = sortedProducts[productIndex - 1];
-      
-      // Yalnız eyni kateqoriyada yer dəyişsin
-      if (currentProduct.category !== previousProduct.category) {
-        alert('⚠️ Yalnız eyni kateqoriya daxilində sıralama mümkündür!');
-        return;
-      }
-      
-      // Swap order values
-      const tempOrder = currentProduct.order || 999;
-      await firestoreService.updateProduct(currentProduct.id, { order: previousProduct.order || 999 });
-      await firestoreService.updateProduct(previousProduct.id, { order: tempOrder });
-      
-      alert('✅ Sıra dəyişdirildi!');
-      loadData();
-    } catch (error) {
-      console.error('Move up error:', error);
-      alert('❌ Xəta baş verdi!');
+    const currentProduct = sortedProducts[productIndex];
+    const previousProduct = sortedProducts[productIndex - 1];
+    
+    // Yalnız eyni kateqoriyada yer dəyişsin
+    if (currentProduct.category !== previousProduct.category) {
+      return;
     }
+    
+    // Swap order values in local state only
+    const updatedProducts = [...displayedProducts];
+    const currentIndex = updatedProducts.findIndex(p => p.id === currentProduct.id);
+    const previousIndex = updatedProducts.findIndex(p => p.id === previousProduct.id);
+    
+    const tempOrder = updatedProducts[currentIndex].order || 999;
+    updatedProducts[currentIndex] = { ...updatedProducts[currentIndex], order: updatedProducts[previousIndex].order || 999 };
+    updatedProducts[previousIndex] = { ...updatedProducts[previousIndex], order: tempOrder };
+    
+    setDisplayedProducts(updatedProducts);
+    setHasUnsavedOrder(true);
   };
 
-  const handleMoveProductDown = async (productIndex, sortedProducts) => {
+  const handleMoveProductDown = (productIndex, sortedProducts) => {
     if (productIndex === sortedProducts.length - 1) return;
     
+    const currentProduct = sortedProducts[productIndex];
+    const nextProduct = sortedProducts[productIndex + 1];
+    
+    // Yalnız eyni kateqoriyada yer dəyişsin
+    if (currentProduct.category !== nextProduct.category) {
+      return;
+    }
+    
+    // Swap order values in local state only
+    const updatedProducts = [...displayedProducts];
+    const currentIndex = updatedProducts.findIndex(p => p.id === currentProduct.id);
+    const nextIndex = updatedProducts.findIndex(p => p.id === nextProduct.id);
+    
+    const tempOrder = updatedProducts[currentIndex].order || 999;
+    updatedProducts[currentIndex] = { ...updatedProducts[currentIndex], order: updatedProducts[nextIndex].order || 999 };
+    updatedProducts[nextIndex] = { ...updatedProducts[nextIndex], order: tempOrder };
+    
+    setDisplayedProducts(updatedProducts);
+    setHasUnsavedOrder(true);
+  };
+
+  const handleSaveProductOrder = async () => {
     try {
-      const currentProduct = sortedProducts[productIndex];
-      const nextProduct = sortedProducts[productIndex + 1];
+      setLoading(true);
       
-      // Yalnız eyni kateqoriyada yer dəyişsin
-      if (currentProduct.category !== nextProduct.category) {
-        alert('⚠️ Yalnız eyni kateqoriya daxilində sıralama mümkündür!');
-        return;
-      }
+      // Batch update all products with new order values
+      const updatePromises = displayedProducts.map(product => 
+        firestoreService.updateProduct(product.id, { order: product.order || 999 })
+      );
       
-      // Swap order values
-      const tempOrder = currentProduct.order || 999;
-      await firestoreService.updateProduct(currentProduct.id, { order: nextProduct.order || 999 });
-      await firestoreService.updateProduct(nextProduct.id, { order: tempOrder });
+      await Promise.all(updatePromises);
       
-      alert('✅ Sıra dəyişdirildi!');
+      alert('✅ Sıralama yadda saxlanıldı!');
+      setProducts(displayedProducts);
+      setHasUnsavedOrder(false);
       loadData();
     } catch (error) {
-      console.error('Move down error:', error);
-      alert('❌ Xəta baş verdi!');
+      console.error('Save order error:', error);
+      alert('❌ Saxlama zamanı xəta baş verdi!');
+    } finally {
+      setLoading(false);
     }
   };
 
