@@ -42,6 +42,7 @@ const AdminPanel = () => {
     image_urls: [''],
     stock: '',
     is_featured: false,
+    order: 999,
     specifications: ''
   });
 
