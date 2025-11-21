@@ -638,13 +638,24 @@ const AdminPanel = () => {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Məhsul İdarəetməsi</h2>
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
-                data-testid="add-product-button"
-              >
-                + Yeni Məhsul
-              </button>
+              <div className="flex gap-3">
+                {hasUnsavedOrder && (
+                  <button
+                    onClick={handleSaveProductOrder}
+                    disabled={loading}
+                    className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center gap-2 disabled:bg-gray-400"
+                  >
+                    💾 Sıralamanı Saxla
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowAddForm(true)}
+                  className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                  data-testid="add-product-button"
+                >
+                  + Yeni Məhsul
+                </button>
+              </div>
             </div>
 
             {/* Add/Edit Form */}
