@@ -1704,6 +1704,24 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
                   </div>
                   
                   <div className="flex items-center gap-2">
+                    {/* Toggle: Bütün məhsullarda göstər */}
+                    <div className="flex items-center gap-2 mr-2">
+                      <span className="text-xs text-gray-600">Bütün məhsullarda:</span>
+                      <button
+                        onClick={() => handleToggleIncludeInAll(category)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          category.includeInAllProducts !== false ? 'bg-green-600' : 'bg-gray-300'
+                        }`}
+                        title={category.includeInAllProducts !== false ? 'Görünür' : 'Gizlidir'}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            category.includeInAllProducts !== false ? 'translate-x-6' : 'translate-x-1'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
                     {/* Yuxarı ox */}
                     <button
                       onClick={() => handleMoveUp(index)}
