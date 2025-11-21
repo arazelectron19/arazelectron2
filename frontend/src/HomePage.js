@@ -89,7 +89,11 @@ const HomePage = () => {
     
     // Kateqoriya filteri
     if (selectedCategory !== 'all') {
+      // Kateqoriya seçilibsə, visibleInAll-dan asılı olmayaraq hamısını göstər
       filtered = filtered.filter(p => p.category === selectedCategory);
+    } else {
+      // "Hamısı" seçilibsə, yalnız visibleInAll=true olanları göstər
+      filtered = filtered.filter(p => p.visibleInAll !== false);
     }
     
     // Axtarış filteri (ad və kateqoriyaya görə)
