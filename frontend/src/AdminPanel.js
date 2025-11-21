@@ -729,19 +729,6 @@ const AdminPanel = () => {
                       Xüsusi məhsul
                     </label>
                   </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="visibleInAll"
-                      checked={formData.visibleInAll !== false}
-                      onChange={(e) => setFormData({...formData, visibleInAll: e.target.checked})}
-                      className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
-                      data-testid="product-visible-checkbox"
-                    />
-                    <label htmlFor="visibleInAll" className="ml-2 text-sm text-gray-700">
-                      Bütün məhsullarda göstər
-                    </label>
-                  </div>
                   <div className="flex space-x-4">
                     <button
                       type="submit"
