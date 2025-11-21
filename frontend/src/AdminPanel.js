@@ -1545,6 +1545,20 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
     }
   };
 
+  const handleToggleIncludeInAll = async (category) => {
+    try {
+      const newValue = !category.includeInAllProducts;
+      await firestoreService.updateCategory(category.id, {
+        includeInAllProducts: newValue
+      });
+      alert(`✅ "${category.name}" kateqoriyası ${newValue ? 'göstəriləcək' : 'gizlədiləcək'} "Bütün Məhsullar"da`);
+      window.location.reload();
+    } catch (error) {
+      console.error('Toggle xətası:', error);
+      alert('❌ Xəta baş verdi!');
+    }
+  };
+
   const handleMigrateOrder = async () => {
     if (!window.confirm('Kateqoriyalara "order" sahəsi əlavə etmək istədiyinizə əminsiniz?')) {
       return;
