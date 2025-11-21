@@ -171,15 +171,40 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       
-      // Batch update all products with new order values
-      const updatePromises = displayedProducts.map(product => 
-        firestoreService.updateProduct(product.id, { order: product.order || 999 })
-      );
+      // First, sort the displayed products to get the correct order
+      const sortedProducts = [...displayedProducts].sort((a, b) => {
+        // Compare categories first
+        if (a.category !== b.category) {
+          return a.category.localeCompare(b.category);
+        }
+        // Then compare by order within same category
+        const orderA = a.order !== undefined ? a.order : 999;
+        const orderB = b.order !== undefined ? b.order : 999;
+        return orderA - orderB;
+      });
+      
+      // Assign sequential order numbers to each product within its category
+      let categoryGroups = {};
+      sortedProducts.forEach(product => {
+        if (!categoryGroups[product.category]) {
+          categoryGroups[product.category] = [];
+        }
+        categoryGroups[product.category].push(product);
+      });
+      
+      // Batch update all products with new sequential order values
+      const updatePromises = [];
+      Object.keys(categoryGroups).forEach(category => {
+        categoryGroups[category].forEach((product, index) => {
+          updatePromises.push(
+            firestoreService.updateProduct(product.id, { order: index })
+          );
+        });
+      });
       
       await Promise.all(updatePromises);
       
       alert('✅ Sıralama yadda saxlanıldı!');
-      setProducts(displayedProducts);
       setHasUnsavedOrder(false);
       loadData();
     } catch (error) {
