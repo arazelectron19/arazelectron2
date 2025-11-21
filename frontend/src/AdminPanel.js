@@ -1651,7 +1651,7 @@ const CategoriesTab = ({ categoriesList, onAddCategory, onDeleteCategory }) => {
       {/* Mövcud kateqoriyalar */}
       <div className="bg-white rounded-lg shadow p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Mövcud Kateqoriyalar ({Array.isArray(categoriesList) ? categoriesList.length : 0})
+          Mövcud Kateqoriyalar
         </h3>
         
         {!Array.isArray(categoriesList) || categoriesList.length === 0 ? (
