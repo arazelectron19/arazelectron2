@@ -38,16 +38,16 @@ const CartDrawer = ({ isOpen, onClose }) => {
       const result = await firestoreService.createOrder(orderData);
       
       setOrderCode(result.code);
+      setSuccessOrderData({ code: result.code, phone: phone.trim() });
       clearCart();
       setPhone('');
       setShowOrderModal(false);
-      
-      // Show success message
-      setTimeout(() => {
-        alert(`✅ Sifariş qeydə alındı!\n\nSizin sifariş kodunuz: ${result.code}\n\nTelefon: ${phone}`);
-      }, 300);
-      
       onClose();
+      
+      // Show custom success modal
+      setTimeout(() => {
+        setShowSuccessModal(true);
+      }, 300);
     } catch (error) {
       console.error('Order creation error:', error);
       setError('Sifariş yaradılarkən xəta baş verdi!');
