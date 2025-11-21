@@ -877,9 +877,6 @@ const AdminPanel = () => {
                           >
                             ↑
                           </button>
-                          <span className="text-sm text-gray-600">
-                            {product.order || 999}
-                          </span>
                           <button
                             onClick={() => handleMoveProductDown(index, sortedProducts)}
                             disabled={index === sortedProducts.length - 1 || (index < sortedProducts.length - 1 && sortedProducts[index + 1].category !== product.category)}
