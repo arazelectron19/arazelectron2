@@ -42,12 +42,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
       clearCart();
       setPhone('');
       setShowOrderModal(false);
-      onClose();
       
-      // Show custom success modal
-      setTimeout(() => {
-        setShowSuccessModal(true);
-      }, 300);
+      // Show custom success modal immediately (no redirect)
+      setShowSuccessModal(true);
     } catch (error) {
       console.error('Order creation error:', error);
       setError('Sifariş yaradılarkən xəta baş verdi!');
