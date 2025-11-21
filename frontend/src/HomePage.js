@@ -110,23 +110,22 @@ const HomePage = () => {
       );
     }
     
-    // Kateqoriya order-ə görə sort et
-    // Kateqoriya order xəritəsi yarat
-    const categoryOrderMap = {};
-    categories.forEach(cat => {
-      categoryOrderMap[cat.name] = cat.order || 999;
-    });
-    
-    // Məhsulları sort et: əvvəl kateqoriya order-ə görə, sonra ad-a görə
+    // Sort məhsulları: əvvəl kateqoriya, sonra kateqoriya daxilində order field
     const sorted = filtered.sort((a, b) => {
-      const orderA = categoryOrderMap[a.category] ?? 999;
-      const orderB = categoryOrderMap[b.category] ?? 999;
+      // 1. Kateqoriya adına görə sort (alfabetik)
+      if (a.category !== b.category) {
+        return a.category.localeCompare(b.category, 'az');
+      }
+      
+      // 2. Eyni kateqoriyada order field-ə görə sort
+      const orderA = a.order !== undefined ? a.order : 999;
+      const orderB = b.order !== undefined ? b.order : 999;
       
       if (orderA !== orderB) {
         return orderA - orderB;
       }
       
-      // Eyni kateqoriyada ada görə sort
+      // 3. Order eyni olarsa, ada görə sort (fallback)
       return a.name.localeCompare(b.name, 'az');
     });
     
