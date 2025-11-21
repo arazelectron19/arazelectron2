@@ -244,7 +244,7 @@ const HomePage = () => {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Hamısı ({products.length})
+                  Hamısı
                 </button>
                 
                 {categories
@@ -259,19 +259,8 @@ const HomePage = () => {
                     const categoryName = typeof category === 'string' ? category : (category?.name || '');
                     const categoryId = typeof category === 'object' && category?.id ? String(category.id) : null;
                     
-                    // Count products by both name and ID (normalized)
-                    const count = products.filter(p => {
-                      const productCategory = p.category || '';
-                      const productCategoryId = p.categoryId ? String(p.categoryId) : null;
-                      
-                      // Match by name OR by ID
-                      return productCategory === categoryName || 
-                             (categoryId && productCategoryId && productCategoryId === categoryId);
-                    }).length;
-                    
-                    return { name: categoryName, id: categoryId, count, order: category.order };
+                    return { name: categoryName, id: categoryId, order: category.order };
                   })
-                  .filter(item => item.count > 0) // Only show categories with products
                   .map(item => (
                     <button
                       key={item.id || item.name}
@@ -282,7 +271,7 @@ const HomePage = () => {
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      {item.name} ({item.count})
+                      {item.name}
                     </button>
                   ))}
               </div>
