@@ -109,6 +109,58 @@ const AdminPanel = () => {
     setShowAddForm(false);
   };
 
+  const handleMoveProductUp = async (productIndex, sortedProducts) => {
+    if (productIndex === 0) return;
+    
+    try {
+      const currentProduct = sortedProducts[productIndex];
+      const previousProduct = sortedProducts[productIndex - 1];
+      
+      // Yalnız eyni kateqoriyada yer dəyişsin
+      if (currentProduct.category !== previousProduct.category) {
+        alert('⚠️ Yalnız eyni kateqoriya daxilində sıralama mümkündür!');
+        return;
+      }
+      
+      // Swap order values
+      const tempOrder = currentProduct.order || 999;
+      await firestoreService.updateProduct(currentProduct.id, { order: previousProduct.order || 999 });
+      await firestoreService.updateProduct(previousProduct.id, { order: tempOrder });
+      
+      alert('✅ Sıra dəyişdirildi!');
+      loadData();
+    } catch (error) {
+      console.error('Move up error:', error);
+      alert('❌ Xəta baş verdi!');
+    }
+  };
+
+  const handleMoveProductDown = async (productIndex, sortedProducts) => {
+    if (productIndex === sortedProducts.length - 1) return;
+    
+    try {
+      const currentProduct = sortedProducts[productIndex];
+      const nextProduct = sortedProducts[productIndex + 1];
+      
+      // Yalnız eyni kateqoriyada yer dəyişsin
+      if (currentProduct.category !== nextProduct.category) {
+        alert('⚠️ Yalnız eyni kateqoriya daxilində sıralama mümkündür!');
+        return;
+      }
+      
+      // Swap order values
+      const tempOrder = currentProduct.order || 999;
+      await firestoreService.updateProduct(currentProduct.id, { order: nextProduct.order || 999 });
+      await firestoreService.updateProduct(nextProduct.id, { order: tempOrder });
+      
+      alert('✅ Sıra dəyişdirildi!');
+      loadData();
+    } catch (error) {
+      console.error('Move down error:', error);
+      alert('❌ Xəta baş verdi!');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
