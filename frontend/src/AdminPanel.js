@@ -1274,7 +1274,7 @@ const ContactInfoTab = ({ contactInfo, onContactUpdate, generalInfo, onGeneralIn
                 type="text"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                placeholder="+994 XX XXX XX XX"
+                placeholder="050 XXX XX XX"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
               />
             </div>
