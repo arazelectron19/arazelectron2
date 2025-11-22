@@ -39,6 +39,25 @@ const CartDrawer = ({ isOpen, onClose }) => {
       
       setOrderCode(result.code);
       setSuccessOrderData({ code: result.code, phone: phone.trim() });
+      
+      // Send Telegram notification
+      try {
+        const telegramMessage = `Yeni Sifariş! ⚠️\n\nMüştəri kodu: ${result.code}\nQiymət: ${getTotal().toFixed(2)} ₼`;
+        
+        await fetch('https://api.telegram.org/bot7599107546:AAHJzKJA0taB2XPaThY7ve7Nd3xpTLVjj0c/sendMessage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: '1089057644',
+            text: telegramMessage
+          })
+        });
+        console.log('✅ Telegram bildirişi göndərildi');
+      } catch (telegramError) {
+        console.error('Telegram bildirişi göndərilmədi:', telegramError);
+        // Telegram xətası sifarişi dayandırmasın
+      }
+      
       clearCart();
       setPhone('');
       setShowOrderModal(false);
