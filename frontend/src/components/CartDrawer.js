@@ -42,13 +42,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
       
       // Send Telegram notification
       try {
-        const telegramMessage = `Yeni Sifariş! 🔔\n\nMüştəri kodu: ${result.code}\nQiymət: ${getTotal().toFixed(2)} ₼`;
+        const telegramMessage = `Yeni Sifariş! ⚠️\n\nMüştəri kodu: ${result.code}\nQiymət: ${getTotal().toFixed(2)} ₼`;
         
         await fetch('https://api.telegram.org/bot7599107546:AAFEpZ9Dh3uJbT71XLZeVt59S8QHxv1ORLI/sendMessage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            chat_id: '1089057644',
+            chat_id: '1809057644',
             text: telegramMessage
           })
         });
