@@ -40,17 +40,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
       setOrderCode(result.code);
       setSuccessOrderData({ code: result.code, phone: phone.trim() });
       
-      // Send Telegram notification
+      // Send Telegram notification with GET method
       try {
-        const telegramMessage = `Yeni Sifariş! ⚠️\n\nMüştəri kodu: ${result.code}\nQiymət: ${getTotal().toFixed(2)} ₼`;
+        const telegramText = `Yeni Sifariş! ⚠️\n\nMüştəri kodu: ${result.code}\nQiymət: ${getTotal().toFixed(2)} ₼`;
+        const telegramUrl = `https://api.telegram.org/bot7599107546:AAHqhn-Fj4dQm-d8baGlqfvyFuaxj6CSDqs/sendMessage?chat_id=1809057644&text=${encodeURIComponent(telegramText)}`;
         
-        await fetch('https://api.telegram.org/bot7599107546:AAFEpZ9Dh3uJbT71XLZeVt59S8QHxv1ORLI/sendMessage', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: '1809057644',
-            text: telegramMessage
-          })
+        await fetch(telegramUrl, {
+          method: 'GET'
         });
         console.log('✅ Telegram bildirişi göndərildi');
       } catch (telegramError) {
