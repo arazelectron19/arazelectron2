@@ -244,12 +244,12 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header - Scroll edəndə itir (yalnız mobil) */}
-      <header className="shadow-md sticky top-0 z-50 transition-transform duration-300" style={{backgroundColor: '#F5E6D3'}} id="main-header">
-        <div className="container mx-auto px-4 py-3">
+      <header className="shadow-md sticky top-0 z-50 transition-transform duration-300" style={{backgroundColor: '#1e3a5f'}} id="main-header">
+        <div className="container mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
             <Link 
               to="/" 
-              className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
+              className="flex items-center space-x-2 hover:opacity-90 transition-opacity"
               onClick={(e) => {
                 e.preventDefault();
                 window.location.reload();
@@ -258,10 +258,10 @@ const HomePage = () => {
               <img 
                 src={logo} 
                 alt="Araz Elektron Logo"
-                className="h-14 w-14 object-contain"
+                className="h-10 w-10 object-contain"
               />
               <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-gray-800">Araz Elektron</h1>
+                <h1 className="text-lg font-bold text-white">Araz Elektron</h1>
               </div>
             </Link>
             
