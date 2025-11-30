@@ -244,7 +244,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header - Scroll edəndə itir (yalnız mobil) */}
-      <header className="bg-orange-600 shadow-md sticky top-0 z-50 transition-transform duration-300" id="main-header">
+      <header className="shadow-md sticky top-0 z-50 transition-transform duration-300" style={{backgroundColor: '#FFB84D'}} id="main-header">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link 
@@ -262,7 +262,6 @@ const HomePage = () => {
               />
               <div>
                 <h1 className="text-2xl font-bold text-white">Araz Elektron</h1>
-                <p className="text-sm text-orange-100">Keyfiyyətli elektron avadanlıqlar</p>
               </div>
             </Link>
             
