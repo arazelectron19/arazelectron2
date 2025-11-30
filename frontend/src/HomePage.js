@@ -53,33 +53,23 @@ const HomePage = () => {
     let ticking = false;
 
     const updateHeaderVisibility = () => {
-      const header = document.getElementById('main-header');
-      const searchPanel = document.getElementById('search-panel');
-      if (!header) return;
+      const headerContainer = document.getElementById('main-header');
+      if (!headerContainer) return;
       
       const currentScrollY = window.scrollY;
       
       // Only apply on mobile devices (screen width < 768px)
       if (window.innerWidth < 768) {
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down & scrolled more than 100px
-          header.style.transform = 'translateY(-100%)';
-          if (searchPanel) {
-            searchPanel.style.transform = 'translateY(-100%)';
-          }
+          // Scrolling down & scrolled more than 100px - hide header
+          headerContainer.style.transform = 'translateY(-100%)';
         } else {
-          // Scrolling up or at top
-          header.style.transform = 'translateY(0)';
-          if (searchPanel) {
-            searchPanel.style.transform = 'translateY(0)';
-          }
+          // Scrolling up or at top - show header
+          headerContainer.style.transform = 'translateY(0)';
         }
       } else {
         // Desktop - always show
-        header.style.transform = 'translateY(0)';
-        if (searchPanel) {
-          searchPanel.style.transform = 'translateY(0)';
-        }
+        headerContainer.style.transform = 'translateY(0)';
       }
       
       lastScrollY = currentScrollY;
@@ -94,16 +84,12 @@ const HomePage = () => {
     };
 
     const onResize = () => {
-      const header = document.getElementById('main-header');
-      const searchPanel = document.getElementById('search-panel');
-      if (!header) return;
+      const headerContainer = document.getElementById('main-header');
+      if (!headerContainer) return;
       
       if (window.innerWidth >= 768) {
         // Desktop - always show
-        header.style.transform = 'translateY(0)';
-        if (searchPanel) {
-          searchPanel.style.transform = 'translateY(0)';
-        }
+        headerContainer.style.transform = 'translateY(0)';
       }
     };
 
