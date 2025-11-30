@@ -256,62 +256,65 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-orange-600 shadow-md sticky top-0 z-50 transition-transform duration-300" id="main-header">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.reload();
-              }}
-            >
-              <img 
-                src={logo} 
-                alt="Araz Elektron Logo"
-                className="h-12 w-12 object-contain"
-              />
-              <div>
-                <h1 className="text-2xl font-bold text-white">Araz Elektron</h1>
-                <p className="text-sm text-orange-100">Keyfiyyətli elektron avadanlıqlar</p>
-              </div>
-            </Link>
-            
-            {/* Cart Icon */}
-            <CartIcon onClick={() => setIsCartOpen(true)} />
-          </div>
-        </div>
-      </header>
-
-      {/* Axtarış Paneli */}
-      <div className="bg-white border-b border-gray-200 py-6 sticky top-0 z-40 transition-transform duration-300" id="search-panel">
-        <div className="w-full px-2 md:px-4">
-          <div className="flex justify-center items-center">
-            <div className="w-full max-w-[95%] md:max-w-3xl md:w-[60%]">
-              <div className="flex flex-row gap-2 justify-center items-center">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Məhsul axtar..."
-                  className="flex-1 px-3 md:px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900"
-                  data-testid="search-input"
+      {/* Header ve Axtarış - Birləşdirilmiş Sticky Container */}
+      <div className="sticky top-0 z-50 transition-transform duration-300" id="main-header">
+        {/* Header */}
+        <header className="bg-orange-600 shadow-md">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <Link 
+                to="/" 
+                className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.reload();
+                }}
+              >
+                <img 
+                  src={logo} 
+                  alt="Araz Elektron Logo"
+                  className="h-12 w-12 object-contain"
                 />
-                <button
-                  onClick={() => {}}
-                  className="px-4 md:px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
-                  data-testid="search-button"
-                >
-                  🔍 Axtar
-                </button>
-              </div>
-              {searchQuery && (
-                <div className="mt-2 text-sm text-gray-600 text-center md:text-left">
-                  {getFilteredProducts().length} nəticə tapıldı
+                <div>
+                  <h1 className="text-2xl font-bold text-white">Araz Elektron</h1>
+                  <p className="text-sm text-orange-100">Keyfiyyətli elektron avadanlıqlar</p>
                 </div>
-              )}
+              </Link>
+              
+              {/* Cart Icon */}
+              <CartIcon onClick={() => setIsCartOpen(true)} />
+            </div>
+          </div>
+        </header>
+
+        {/* Axtarış Paneli */}
+        <div className="bg-white border-b border-gray-200 py-6" id="search-panel">
+          <div className="w-full px-2 md:px-4">
+            <div className="flex justify-center items-center">
+              <div className="w-full max-w-[95%] md:max-w-3xl md:w-[60%]">
+                <div className="flex flex-row gap-2 justify-center items-center">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Məhsul axtar..."
+                    className="flex-1 px-3 md:px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900"
+                    data-testid="search-input"
+                  />
+                  <button
+                    onClick={() => {}}
+                    className="px-4 md:px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
+                    data-testid="search-button"
+                  >
+                    🔍 Axtar
+                  </button>
+                </div>
+                {searchQuery && (
+                  <div className="mt-2 text-sm text-gray-600 text-center md:text-left">
+                    {getFilteredProducts().length} nəticə tapıldı
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
