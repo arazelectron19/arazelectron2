@@ -244,8 +244,8 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header - Scroll edəndə itir (yalnız mobil) */}
-      <header className="shadow-md sticky top-0 z-50 transition-transform duration-300" style={{backgroundColor: '#FFB84D'}} id="main-header">
-        <div className="container mx-auto px-4 py-4">
+      <header className="shadow-md sticky top-0 z-50 transition-transform duration-300" style={{backgroundColor: '#F5E6D3'}} id="main-header">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <Link 
               to="/" 
@@ -258,10 +258,10 @@ const HomePage = () => {
               <img 
                 src={logo} 
                 alt="Araz Elektron Logo"
-                className="h-12 w-12 object-contain"
+                className="h-14 w-14 object-contain"
               />
-              <div>
-                <h1 className="text-2xl font-bold text-white">Araz Elektron</h1>
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold text-gray-800">Araz Elektron</h1>
               </div>
             </Link>
             
