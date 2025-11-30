@@ -44,6 +44,7 @@ const DataManager = () => {
   const [highlightedProducts, setHighlightedProducts] = useState(new Set());
   const [searchMessage, setSearchMessage] = useState('');
   const productRefs = React.useRef({});
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [renamingCategory, setRenamingCategory] = useState(null);
   const [newCategoryNameForRename, setNewCategoryNameForRename] = useState('');
   const [renameError, setRenameError] = useState('');
