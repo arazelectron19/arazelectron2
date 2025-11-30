@@ -444,7 +444,7 @@ const HomePage = () => {
                 >
                   {/* Şəkil */}
                   <div 
-                    className="w-full h-64 bg-white md:bg-gray-100 flex items-center justify-center overflow-hidden p-4 md:p-0"
+                    className="w-full h-40 md:h-64 bg-white md:bg-gray-100 flex items-center justify-center overflow-hidden p-3 md:p-0"
                   >
                     {product.image_urls && product.image_urls.length > 0 ? (
                       <img
@@ -462,14 +462,14 @@ const HomePage = () => {
                   </div>
 
                   {/* Məzmun */}
-                  <div className="p-3">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-orange-600 line-clamp-2">
+                  <div className="p-2 md:p-3">
+                    <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 hover:text-orange-600 line-clamp-2">
                       {product.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
+                    <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 line-clamp-2">{product.description}</p>
                     
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-orange-600">{product.price.toFixed(2)} ₼</span>
+                      <span className="text-lg md:text-2xl font-bold text-orange-600">{product.price.toFixed(2)} ₼</span>
                     </div>
                   </div>
                 </div>
