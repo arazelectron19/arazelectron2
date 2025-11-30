@@ -54,6 +54,7 @@ const HomePage = () => {
 
     const updateHeaderVisibility = () => {
       const header = document.getElementById('main-header');
+      const searchPanel = document.getElementById('search-panel');
       if (!header) return;
       
       const currentScrollY = window.scrollY;
@@ -63,13 +64,22 @@ const HomePage = () => {
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           // Scrolling down & scrolled more than 100px
           header.style.transform = 'translateY(-100%)';
+          if (searchPanel) {
+            searchPanel.style.transform = 'translateY(-100%)';
+          }
         } else {
           // Scrolling up or at top
           header.style.transform = 'translateY(0)';
+          if (searchPanel) {
+            searchPanel.style.transform = 'translateY(0)';
+          }
         }
       } else {
         // Desktop - always show
         header.style.transform = 'translateY(0)';
+        if (searchPanel) {
+          searchPanel.style.transform = 'translateY(0)';
+        }
       }
       
       lastScrollY = currentScrollY;
@@ -85,11 +95,15 @@ const HomePage = () => {
 
     const onResize = () => {
       const header = document.getElementById('main-header');
+      const searchPanel = document.getElementById('search-panel');
       if (!header) return;
       
       if (window.innerWidth >= 768) {
         // Desktop - always show
         header.style.transform = 'translateY(0)';
+        if (searchPanel) {
+          searchPanel.style.transform = 'translateY(0)';
+        }
       }
     };
 
