@@ -308,7 +308,7 @@ const HomePage = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sol tərəf - Kataloq */}
           <aside className="lg:w-48 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-md p-4 sticky top-24">
+            <div className="bg-white rounded-lg shadow-md p-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
               {/* Mobile: clickable başlıq, Desktop: sadə başlıq */}
               <button
                 onClick={() => setIsCatalogOpen(!isCatalogOpen)}
