@@ -48,28 +48,29 @@ const HomePage = () => {
   }, []);
 
   // Scroll behavior for mobile - hide header on scroll down, show on scroll up
+  // Axtarış paneli həmişə görünür qalır
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
 
     const updateHeaderVisibility = () => {
-      const headerContainer = document.getElementById('main-header');
-      if (!headerContainer) return;
+      const header = document.getElementById('main-header');
+      if (!header) return;
       
       const currentScrollY = window.scrollY;
       
       // Only apply on mobile devices (screen width < 768px)
       if (window.innerWidth < 768) {
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down & scrolled more than 100px - hide header
-          headerContainer.style.transform = 'translateY(-100%)';
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+          // Scrolling down & scrolled more than 80px - hide orange header
+          header.style.transform = 'translateY(-100%)';
         } else {
           // Scrolling up or at top - show header
-          headerContainer.style.transform = 'translateY(0)';
+          header.style.transform = 'translateY(0)';
         }
       } else {
         // Desktop - always show
-        headerContainer.style.transform = 'translateY(0)';
+        header.style.transform = 'translateY(0)';
       }
       
       lastScrollY = currentScrollY;
@@ -84,12 +85,12 @@ const HomePage = () => {
     };
 
     const onResize = () => {
-      const headerContainer = document.getElementById('main-header');
-      if (!headerContainer) return;
+      const header = document.getElementById('main-header');
+      if (!header) return;
       
       if (window.innerWidth >= 768) {
         // Desktop - always show
-        headerContainer.style.transform = 'translateY(0)';
+        header.style.transform = 'translateY(0)';
       }
     };
 
