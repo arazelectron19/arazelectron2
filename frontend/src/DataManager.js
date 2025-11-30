@@ -1428,8 +1428,17 @@ Düzəldilən kateqoriyalar: ${fixedCategories}`);
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {(() => {
-                    // Sort displayedProducts: first by category, then by order
-                    const sortedProducts = [...displayedProducts].sort((a, b) => {
+                    // Apply category filter first
+                    let visibleProducts = displayedProducts;
+                    
+                    if (selectedCategory !== 'all') {
+                      visibleProducts = visibleProducts.filter(
+                        (p) => p.category === selectedCategory
+                      );
+                    }
+                    
+                    // Sort visibleProducts: first by category, then by order
+                    const sortedProducts = [...visibleProducts].sort((a, b) => {
                       // Compare categories first
                       if (a.category !== b.category) {
                         return a.category.localeCompare(b.category);
