@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/arazelectron2/static/css/main.76c3b5aa.css",
+    "main.js": "/arazelectron2/static/js/main.de0b2d8a.js",
+    "static/media/logo.png": "/arazelectron2/static/media/logo.c4a60675b222b2439708.png",
+    "index.html": "/arazelectron2/index.html",
+    "main.76c3b5aa.css.map": "/arazelectron2/static/css/main.76c3b5aa.css.map",
+    "main.de0b2d8a.js.map": "/arazelectron2/static/js/main.de0b2d8a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76c3b5aa.css",
+    "static/js/main.de0b2d8a.js"
+  ]
+}

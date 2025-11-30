@@ -32,3 +32,21 @@
         transform: rotate(360deg);
     }
 }
+
+/* Məhsul kartları üçün şəkil stilləri */
+.product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobil üçün şəkillərə padding əlavə et */
+@media (max-width: 768px) {
+    .product-card-image {
+        padding: 15px !important;
+    }
+    
+    .product-card-image img {
+        object-fit: contain !important;
+    }
+}
