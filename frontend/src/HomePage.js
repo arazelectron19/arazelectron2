@@ -286,7 +286,7 @@ const HomePage = () => {
       </header>
 
       {/* Axtarış Paneli */}
-      <div className="bg-white border-b border-gray-200 py-6">
+      <div className="bg-white border-b border-gray-200 py-6 sticky top-0 z-40 transition-transform duration-300" id="search-panel">
         <div className="w-full px-2 md:px-4">
           <div className="flex justify-center items-center">
             <div className="w-full max-w-[95%] md:max-w-3xl md:w-[60%]">
